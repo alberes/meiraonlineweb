@@ -1,0 +1,87 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card card-plain">
+        <div class="card-header">
+          <p class="category">Aviso Prévio Trabalhado / Idenizado</p>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="form-row align-items-center">
+              <div class="col-auto my-1">
+                <label class="mr-sm-2" for="inlineFormCustomSelect">Empresa</label>
+                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="company">
+                  <option selected disabled>Selecione uma empresa</option>
+                  <option *ngFor="let item of companies" value="item.id">{{ item.name }}</option>
+                </select>
+              </div>
+              <div class="col-auto my-1">
+                <label class="mr-sm-2" for="inlineFormCustomSelect">Empresa</label>
+                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" company="exported">
+                  <option selected disabled>Exportados</option>
+                    <option value="s">Sim</option>
+                    <option value="n">não</option>
+                </select>
+              </div>
+              <div class="col-auto my-1">
+                <button (click)="filterCompany()" type="submit" class="btn btn-primary">Filtrar</button>
+              </div>
+            </div>
+          </form>
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                <th class="col-sm-6">
+                  Nome
+                </th>
+                <th class="col-sm-1">
+                  Excluir
+                </th>
+                <th class="col-sm-1">
+                  Exportar
+                </th>
+              </thead>
+              <tbody class="employee">
+                <tr *ngFor="let item of employees; let even = even; let odd = odd">
+                  <td>
+                    <a (click)="edit(item.id)">{{ item.name }}</a>
+                  </td>
+                  <td>
+                    {{ item.id }}
+                  </td>
+                  <td>
+                    {{ item.id }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div data-toggle="buttons" class="btn-group">
+            <button (click)="first()" mat-raised-button="" type="button" class="btn btn-round btn-info mat-raised-button mat-button-base">
+               <span class="mat-button-wrapper"><<</span>
+               <div matripple="" class="mat-ripple mat-button-ripple"></div>
+               <div class="mat-button-focus-overlay"></div>
+            </button>
+            <button (click)="rewind()" mat-raised-button="" type="button" class="btn btn-round btn-info mat-raised-button mat-button-base">
+               <span class="mat-button-wrapper"><</span>
+               <div matripple="" class="mat-ripple mat-button-ripple"></div>
+               <div class="mat-button-focus-overlay"></div>
+            </button>
+            <button (click)="forward()" mat-raised-button="" type="button" class="btn btn-round btn-info mat-raised-button mat-button-base">
+               <span class="mat-button-wrapper">&gt;</span>
+               <div matripple="" class="mat-ripple mat-button-ripple"></div>
+               <div class="mat-button-focus-overlay"></div>
+            </button>
+            <button (click)="last()" mat-raised-button="" type="button" class="btn btn-round btn-info mat-raised-button mat-button-base">
+               <span class="mat-button-wrapper">&gt;&gt;</span>
+               <div matripple="" class="mat-ripple mat-button-ripple"></div>
+               <div class="mat-button-focus-overlay"></div>
+            </button>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

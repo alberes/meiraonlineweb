@@ -1,0 +1,17 @@
+.odd{
+    background-color: #EBECF1;
+}
+
+.even{
+    background-color: #EBECF5;
+}
+
+.employee tr:hover{
+	background-color:#FFFFFF;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.action{
+	width: 5%;
+}
