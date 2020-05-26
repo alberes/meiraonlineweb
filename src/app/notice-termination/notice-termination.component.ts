@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DomainDTO } from '../models/domain.dto';
 import { APIDomainService } from '../services/apidomain.service';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet, ActivationStart } from '@angular/router';
+import { FormGroup, FormBuilder, Validator, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-notice-termination',
@@ -13,16 +14,27 @@ export class NoticeTerminationComponent implements OnInit {
   companies: DomainDTO[];
   public employees: DomainDTO[];
 
+  formGroup:FormGroup;
+  @ViewChild(RouterOutlet) outlet: RouterOutlet;
+
   totalPages:number = 0;
   currentPage:number = 1;
   action:string = '';
 
   error:any;
   
-  constructor(private router: Router, private apiDomainService:APIDomainService) { }
+  constructor(private router: Router, private formBuilder:FormBuilder, private apiDomainService:APIDomainService) {
+    this.formGroup = this.formBuilder.group({
+      companyId:[null, [Validators.required]],
+      exported:[null, [Validators.required]]
+    });
+  }
 
   ngOnInit(): void {
-    this.getEmployees();
+    this.router.events.subscribe(e => {
+      if (e instanceof ActivationStart && e.snapshot.outlet === "administration")
+        this.outlet.deactivate();
+    });
     this.apiDomainService.getDomains('companies').subscribe(
       (domains:DomainDTO[]) => {
         this.companies = domains;
@@ -35,11 +47,13 @@ export class NoticeTerminationComponent implements OnInit {
   }
 
   public filterCompany():void{
-    alert("Filtro");
+    this.getEmployees();
   }
 
   private getEmployees():void{
-    this.apiDomainService.getDomains('/employees/company/1?page=' + (this.currentPage - 1)).subscribe(
+    let resource:string = '/employees/company/'+this.formGroup.value['companyId']+
+      '?exported='+this.formGroup.value['exported']+'&page=' + (this.currentPage - 1);
+    this.apiDomainService.getDomains(resource).subscribe(
       (domains:DomainDTO[]) => {
         this.employees = domains['content'];
         this.totalPages = domains['totalPages'];

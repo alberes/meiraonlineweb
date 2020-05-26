@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { NoticeTerminationComponent } from 'src/app/notice-termination/notice-termination.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,9 @@ import { NoticeTerminationComponent } from 'src/app/notice-termination/notice-te
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(AdminLayoutRoutes)
+    RouterModule.forChild(AdminLayoutRoutes),
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class AdminLayoutModule { }
