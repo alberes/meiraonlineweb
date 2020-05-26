@@ -54,6 +54,7 @@ export class NoticeTerminationComponent implements OnInit {
     }else if(this.fGFilterCompany.value['exported'] == null){
       this.message = 'Selecione um filtro exportados Sim ou Não.';
     }else{
+      this.currentPage = 1;
       this.getEmployees();
     }
   }
