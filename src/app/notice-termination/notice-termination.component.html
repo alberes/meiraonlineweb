@@ -33,6 +33,9 @@
               <div class="col-auto my-1">
                 <button type="submit" class="btn btn-primary">Filtrar</button>
               </div>
+              <div class="col-auto my-1">
+                <a class="btn btn-primary" (click)="openAlert(actionEmployee)">Cadastrar</a>
+              </div>      
             </div>
           </form>
           <div class="table-responsive">
@@ -54,10 +57,14 @@
                     <a (click)="edit(item.id)">{{ item.name }}</a>
                   </td>
                   <td>
-                    {{ item.id }}
+                    <div class="col-auto my-1">
+                      <a class="btn btn-primary" (click)="deleteMessage(item.id, item.name, actionEmployee)">Excluir</a>
+                    </div>
                   </td>
                   <td>
-                    {{ item.id }}
+                    <div class="col-auto my-1">
+                      <a class="btn btn-primary" (click)="exportMessage(item.id, item.name, actionEmployee)">Exportar</a>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -86,6 +93,22 @@
             </button>
          </div>
         </div>
+        <ng-template #actionEmployee let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">{{ titleModal }}</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {{ messageModal }}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancelar</button>
+            <button *ngIf="actiomModal === 'Excluir'" type="button" class="btn btn-outline-dark" (click)="delete()">{{ actiomModal }}</button>
+            <button *ngIf="actiomModal === 'Exportar'" type="button" class="btn btn-outline-dark" (click)="export()">{{ actiomModal }}</button>
+          </div>
+        </ng-template>
       </div>
     </div>
   </div>

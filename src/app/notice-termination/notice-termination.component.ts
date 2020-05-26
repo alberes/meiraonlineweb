@@ -3,6 +3,7 @@ import { DomainDTO } from '../models/domain.dto';
 import { APIDomainService } from '../services/apidomain.service';
 import { Router, RouterOutlet, ActivationStart } from '@angular/router';
 import { FormGroup, FormBuilder, Validator, Validators } from '@angular/forms';
+import {NgbModal, ModalDismissReasons, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-notice-termination',
@@ -17,14 +18,21 @@ export class NoticeTerminationComponent implements OnInit {
 
   fGFilterCompany:FormGroup;
   @ViewChild(RouterOutlet) outlet: RouterOutlet;
+  modalOptions:NgbModalOptions;
+  closeResult: string;
+
+  titleModal:string = '';
+  messageModal:string = '';
+  actiomModal:string = '';
 
   totalPages:number = 0;
   currentPage:number = 1;
   action:string = '';
+  employeeId:string = '';
 
   error:any;
   
-  constructor(private router: Router, private formBuilder:FormBuilder, private apiDomainService:APIDomainService) {
+  constructor(private router: Router, private formBuilder:FormBuilder, private modalService: NgbModal, private apiDomainService:APIDomainService) {
     this.fGFilterCompany = this.formBuilder.group({
       companyId:[null, [Validators.required]],
       exported:[null, [Validators.required]]
@@ -102,6 +110,54 @@ export class NoticeTerminationComponent implements OnInit {
 
   public edit(id:string){
     alert(id);
+  }
+
+  public deleteMessage(id:string, name:string, content):void{
+    this.titleModal = 'Alerta';
+    this.messageModal = `Deseja exluir o registro ${id} - ${name}?`;
+    this.actiomModal = 'Excluir';
+    this.employeeId = id;
+    this.openAlert(content);
+  }
+
+  public delete():void{
+    if(this.modalService.hasOpenModals){
+      this.modalService.dismissAll();
+      this.message = 'Empregado excluído com sucesso';
+    }
+  }
+
+  public exportMessage(id:string, name:string, content):void{
+    this.titleModal = 'Alerta';
+    this.messageModal = `Deseja exportar o registro ${id} - ${name}?`;
+    this.actiomModal = 'Exportar';
+    this.employeeId = id;
+    this.openAlert(content);
+  }
+
+  public export():void{
+    if(this.modalService.hasOpenModals){
+      this.modalService.dismissAll();
+      this.message = 'Empregado exportado com sucesso';
+    }
+  }
+
+  public openAlert(content):void{
+    this.modalService.open(content, this.modalOptions).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
   }
   
 }
