@@ -9,18 +9,23 @@
         </div>
         <div class="card-body">
           <form [formGroup]="fGFilterCompany" (submit)="filterCompany()">
+            <div *ngIf="message !== ''">
+              <div class="col-md-6">
+                <button class="btn btn-primary btn-block">{{ message }}</button>
+              </div>
+            </div>
             <div class="form-row align-items-center">
               <div class="col-auto my-1">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Empresa</label>
                 <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" formControlName="companyId">
-                  <option [selected]="" selected>Selecione uma empresa</option>
+                  <option [selected]="" disabled [ngValue]="null">Selecione uma empresa</option>
                   <option *ngFor="let item of companies" value="{{ item.id }}">{{ item.name }}</option>
-                </select>
+                </select>                
               </div>
               <div class="col-auto my-1">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Empresa</label>
                 <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" formControlName="exported">
-                  <option selected selected>Exportados</option>
+                  <option [selected]="" disabled [ngValue]="null">Exportados</option>
                     <option value="S">Sim</option>
                     <option value="N">não</option>
                 </select>

@@ -13,6 +13,7 @@ export class NoticeTerminationComponent implements OnInit {
 
   companies: DomainDTO[];
   public employees: DomainDTO[];
+  public message:string = '';
 
   fGFilterCompany:FormGroup;
   @ViewChild(RouterOutlet) outlet: RouterOutlet;
@@ -47,7 +48,14 @@ export class NoticeTerminationComponent implements OnInit {
   }
 
   public filterCompany():void{
-    this.getEmployees();
+    this.message = '';
+    if(this.fGFilterCompany.value['companyId'] == null){
+      this.message = 'Selecione uma empresa.';
+    }else if(this.fGFilterCompany.value['exported'] == null){
+      this.message = 'Selecione um filtro exportados Sim ou Não.';
+    }else{
+      this.getEmployees();
+    }
   }
 
   private getEmployees():void{
@@ -94,4 +102,5 @@ export class NoticeTerminationComponent implements OnInit {
   public edit(id:string){
     alert(id);
   }
+  
 }
