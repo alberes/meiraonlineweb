@@ -14,7 +14,7 @@ export class NoticeTerminationComponent implements OnInit {
   companies: DomainDTO[];
   public employees: DomainDTO[];
 
-  formGroup:FormGroup;
+  fGFilterCompany:FormGroup;
   @ViewChild(RouterOutlet) outlet: RouterOutlet;
 
   totalPages:number = 0;
@@ -24,7 +24,7 @@ export class NoticeTerminationComponent implements OnInit {
   error:any;
   
   constructor(private router: Router, private formBuilder:FormBuilder, private apiDomainService:APIDomainService) {
-    this.formGroup = this.formBuilder.group({
+    this.fGFilterCompany = this.formBuilder.group({
       companyId:[null, [Validators.required]],
       exported:[null, [Validators.required]]
     });
@@ -51,8 +51,8 @@ export class NoticeTerminationComponent implements OnInit {
   }
 
   private getEmployees():void{
-    let resource:string = '/employees/company/'+this.formGroup.value['companyId']+
-      '?exported='+this.formGroup.value['exported']+'&page=' + (this.currentPage - 1);
+    let resource:string = '/employees/company/'+this.fGFilterCompany.value['companyId']+
+      '?exported='+this.fGFilterCompany.value['exported']+'&page=' + (this.currentPage - 1);
     this.apiDomainService.getDomains(resource).subscribe(
       (domains:DomainDTO[]) => {
         this.employees = domains['content'];
