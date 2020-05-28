@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DomainDTO } from '../models/domain.dto';
 import { APIDomainService } from '../services/apidomain.service';
 import { Router, RouterOutlet, ActivationStart } from '@angular/router';
-import { FormGroup, FormBuilder, Validator, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {NgbModal, ModalDismissReasons, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -48,8 +48,8 @@ export class NoticeTerminationComponent implements OnInit {
       (domains:DomainDTO[]) => {
         this.companies = domains;
       },
-      (erro:any) => {
-        this.error = erro;
+      (error:any) => {
+        this.error = error;
         console.log(this.error);
       }
     );
@@ -75,8 +75,8 @@ export class NoticeTerminationComponent implements OnInit {
         this.employees = domains['content'];
         this.totalPages = domains['totalPages'];
       },
-      (erro:any) => {
-        this.error = erro;
+      (error:any) => {
+        this.error = error;
         console.log(this.error);
       }
     );
@@ -106,6 +106,10 @@ export class NoticeTerminationComponent implements OnInit {
       this.currentPage = this.totalPages;
       this.getEmployees();
     }
+  }
+
+  public goSave():void{
+    this.router.navigate(['notice-termination-save']);
   }
 
   public edit(id:string){

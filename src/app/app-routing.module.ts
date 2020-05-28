@@ -5,6 +5,7 @@ import { NoticeTerminationComponent } from './notice-termination/notice-terminat
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { AdminLayoutModule } from './layouts/admin-layout/admin-layout.module';
+import { NoticeTerminationSaveComponent } from './notice-termination-save/notice-termination-save.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,10 @@ const routes: Routes = [
       {
         path: 'notice-termination',
         component: NoticeTerminationComponent
+      },
+      {
+        path: 'notice-termination-save',
+        component: NoticeTerminationSaveComponent
       }
     ]}
 ];

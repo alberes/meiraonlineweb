@@ -10,6 +10,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { APIDomainService } from './services/apidomain.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NoticeTerminationSaveComponent } from './notice-termination-save/notice-termination-save.component';
 
 @NgModule({
   declarations: [

@@ -10,8 +10,11 @@
         <div class="card-body">
           <form [formGroup]="fGFilterCompany" (submit)="filterCompany()">
             <div *ngIf="message !== ''">
-              <div class="col-md-6">
-                <button class="btn btn-primary btn-block">{{ message }}</button>
+              <div class="alert alert-danger">
+                <button type="button" aria-hidden="true" class="close">
+                  <i class="now-ui-icons ui-1_simple-remove"></i>
+                </button>
+                <span>{{ message }}</span>
               </div>
             </div>
             <div class="form-row align-items-center">
@@ -34,7 +37,7 @@
                 <button type="submit" class="btn btn-primary">Filtrar</button>
               </div>
               <div class="col-auto my-1">
-                <a class="btn btn-primary" (click)="openAlert(actionEmployee)">Cadastrar</a>
+                <a class="btn btn-primary" (click)="goSave()">Cadastrar</a>
               </div>      
             </div>
           </form>
