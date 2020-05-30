@@ -12,6 +12,6 @@ export class APIDomainService {
   constructor(private httpClient:HttpClient) { }
 
   public getDomains(resource:string):Observable<DomainDTO[]>{
-    return this.httpClient.get<DomainDTO[]>(`${API_MF_CONFIG.baseUrl}/${resource}`);
+    return this.httpClient.get<DomainDTO[]>(`${API_MF_CONFIG.baseUrlDomain}/${resource}`);
   }
 }

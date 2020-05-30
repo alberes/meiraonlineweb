@@ -18,7 +18,7 @@ const routes: Routes = [
         component: NoticeTerminationComponent
       },
       {
-        path: 'notice-termination-save',
+        path: 'notice-termination-save/:employId',
         component: NoticeTerminationSaveComponent
       }
     ]}

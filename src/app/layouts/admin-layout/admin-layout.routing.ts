@@ -5,5 +5,5 @@ import { NoticeTerminationSaveComponent } from '../../notice-termination-save/no
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'notice-termination', component: NoticeTerminationComponent},
-    { path: 'notice-termination-save', component: NoticeTerminationSaveComponent}
+    { path: 'notice-termination-save/:employId', component: NoticeTerminationSaveComponent}
 ];

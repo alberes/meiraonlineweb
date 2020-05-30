@@ -7,10 +7,11 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APIDomainService } from './services/apidomain.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NoticeTerminationSaveComponent } from './notice-termination-save/notice-termination-save.component';
+import { APINoticeTerminationService } from './services/apinotice-termination.service';
+import { HttpErrorMeiraInterceptor } from './services/exception/http-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,13 @@ import { NoticeTerminationSaveComponent } from './notice-termination-save/notice
   ],
   providers: [
     HttpClient,
-    APIDomainService
+    APIDomainService,
+    APINoticeTerminationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorMeiraInterceptor,
+      multi: true  
+    }
   ],
   bootstrap: [AppComponent]
 })

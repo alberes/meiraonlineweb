@@ -4,6 +4,7 @@ import { APIDomainService } from '../services/apidomain.service';
 import { Router, RouterOutlet, ActivationStart } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {NgbModal, ModalDismissReasons, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
+import { APINoticeTerminationService } from '../services/apinotice-termination.service';
 
 @Component({
   selector: 'app-notice-termination',
@@ -12,27 +13,30 @@ import {NgbModal, ModalDismissReasons, NgbModalOptions} from '@ng-bootstrap/ng-b
 })
 export class NoticeTerminationComponent implements OnInit {
 
-  companies: DomainDTO[];
+  public companies: DomainDTO[];
   public employees: DomainDTO[];
-  public message:string = '';
 
-  fGFilterCompany:FormGroup;
+  public fGFilterCompany:FormGroup;
   @ViewChild(RouterOutlet) outlet: RouterOutlet;
   modalOptions:NgbModalOptions;
   closeResult: string;
 
-  titleModal:string = '';
-  messageModal:string = '';
-  actiomModal:string = '';
+  public titleModal:string = '';
+  public messageModal:string = '';
+  public actiomModal:string = '';
 
-  totalPages:number = 0;
-  currentPage:number = 1;
-  action:string = '';
-  employeeId:string = '';
+  public totalPages:number = 0;
+  public currentPage:number = 1;
+  public action:string = '';
+
+  public employeeId:string = '';
+  public status:number = -1;
+  public message:string = '';
 
   error:any;
   
-  constructor(private router: Router, private formBuilder:FormBuilder, private modalService: NgbModal, private apiDomainService:APIDomainService) {
+  constructor(private router: Router, private formBuilder:FormBuilder, private modalService: NgbModal, private apiDomainService:APIDomainService,
+     private apiNoticeTerminationService:APINoticeTerminationService) {
     this.fGFilterCompany = this.formBuilder.group({
       companyId:[null, [Validators.required]],
       exported:[null, [Validators.required]]
@@ -112,13 +116,9 @@ export class NoticeTerminationComponent implements OnInit {
     this.router.navigate(['notice-termination-save']);
   }
 
-  public edit(id:string){
-    alert(id);
-  }
-
   public deleteMessage(id:string, name:string, content):void{
     this.titleModal = 'Alerta';
-    this.messageModal = `Deseja exluir o registro ${id} - ${name}?`;
+    this.messageModal = `Deseja exluir o Aviso Prévio Trabalhado / Idenizado do colaborador ${id} - ${name}?`;
     this.actiomModal = 'Excluir';
     this.employeeId = id;
     this.openAlert(content);
@@ -127,13 +127,24 @@ export class NoticeTerminationComponent implements OnInit {
   public delete():void{
     if(this.modalService.hasOpenModals){
       this.modalService.dismissAll();
-      this.message = 'Empregado excluído com sucesso';
+      this.apiNoticeTerminationService.delete(`terminationotices/${this.employeeId}`).subscribe(
+        (data) => {
+          this.status = 0;
+          this.message = 'Aviso Prévio Trabalhado / Idenizado excluído com sucesso.';
+        },
+        error => {
+          this.status = 1;
+          this.message = 'Erro ao tentar excluir o Prévio Trabalhado / Idenizado';
+          console.log(error);
+        }
+      )
+      this.message = 'Aviso Prévio Trabalhado / Idenizado excluído com sucesso';
     }
   }
 
   public exportMessage(id:string, name:string, content):void{
     this.titleModal = 'Alerta';
-    this.messageModal = `Deseja exportar o registro ${id} - ${name}?`;
+    this.messageModal = `Deseja exportar o Aviso Prévio Trabalhado / Idenizado do colaborador ${id} - ${name}?`;
     this.actiomModal = 'Exportar';
     this.employeeId = id;
     this.openAlert(content);
