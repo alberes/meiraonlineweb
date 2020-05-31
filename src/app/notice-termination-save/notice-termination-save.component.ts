@@ -122,10 +122,18 @@ export class NoticeTerminationSaveComponent implements OnInit {
       console.log('Not found employeeId');
     }
   }
-  
+
   public saveMessage(content):void{
-    this.titleModal = 'Alerta';    
-    this.openAlert(content);
+    if(this.fGNoticeTermination.get('noticeReasonId').invalid || this.fGNoticeTermination.get('noticeDate').invalid ||
+      this.fGNoticeTermination.get('lastDay').invalid || this.fGNoticeTermination.get('endDate').invalid ||
+      this.fGNoticeTermination.get('noticeStatus').invalid || this.fGNoticeTermination.get('noticeTypeId').invalid ||
+      this.fGNoticeTermination.get('noticeTypeWorkedId').invalid || this.fGNoticeTermination.get('cancelDate').invalid ||
+      this.fGNoticeTermination.get('cancelNoticeReasonId').invalid){
+      this.status = 1;
+    }else{
+      this.titleModal = 'Alerta';    
+      this.openAlert(content);
+    }
   }
 
   public save(){
@@ -139,7 +147,7 @@ export class NoticeTerminationSaveComponent implements OnInit {
             this.message = 'Aviso Prévio Trabalhado / Idenizado atualizado com sucesso';
           },
             error => {
-              this.status = 1;
+              this.status = 2;
               this.message = 'Erro ao tentar atualizar o Prévio Trabalhado / Idenizado';
               console.log(error);
             }
@@ -153,7 +161,7 @@ export class NoticeTerminationSaveComponent implements OnInit {
           this.actiomModal = 'Atualizar';
           },
           error => {
-            this.status = 1;
+            this.status = 2;
               this.message = 'Erro ao tentar criar o Prévio Trabalhado / Idenizado';
               console.log(error);
           }
@@ -216,4 +224,40 @@ export class NoticeTerminationSaveComponent implements OnInit {
     }
   }
 
+  get noticeReasonId():any{
+    return this.fGNoticeTermination.get('noticeReasonId');
+  }
+
+  get noticeDate():any{
+    return this.fGNoticeTermination.get('noticeDate');
+  }
+
+  get lastDay():any{
+    return this.fGNoticeTermination.get('lastDay');
+  }
+
+  get endDate():any{
+    return this.fGNoticeTermination.get('endDate');
+  }
+
+  get noticeStatus():any{
+    return this.fGNoticeTermination.get('noticeStatus');
+  }
+
+  get noticeTypeId():any{
+    return this.fGNoticeTermination.get('noticeTypeId');
+  }
+
+  get noticeTypeWorkedId():any{
+    return this.fGNoticeTermination.get('noticeTypeWorkedId');
+  }
+
+  get cancelDate():any{
+    return this.fGNoticeTermination.get('cancelDate');
+  }
+
+  get cancelNoticeReasonId():any{
+    return this.fGNoticeTermination.get('cancelNoticeReasonId');
+  }
+  
 }

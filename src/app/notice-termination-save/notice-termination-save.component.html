@@ -14,6 +14,22 @@
                 <button type="button" aria-hidden="true" class="close">
                   <i class="now-ui-icons ui-1_simple-remove"></i>
                 </button>
+                <span *ngIf="noticeTypeId.invalid">Tipo de aviso</span>
+                <span *ngIf="noticeReasonId.invalid">Motivo do desligamento</span>
+                <span *ngIf="noticeDate.invalid">Data da com. do aviso</span>
+                <span *ngIf="lastDay.invalid">Data do último dia de trabalho</span>
+                <span *ngIf="endDate.invalid">Data prevista do desligamento</span>
+                <span *ngIf="noticeStatus.invalid">Cancelar o aviso prévio</span>
+                <span *ngIf="noticeTypeWorkedId.invalid">Tipo de aviso prévio trabalhado</span>
+                <span *ngIf="cancelDate.invalid">Data cancelamento o aviso</span>
+                <span *ngIf="cancelNoticeReasonId.invalid">Motivo do desligamento</span>
+              </div>
+            </div>
+            <div *ngIf="status === 2">
+              <div class="alert alert-danger">
+                <button type="button" aria-hidden="true" class="close">
+                  <i class="now-ui-icons ui-1_simple-remove"></i>
+                </button>
                 <span>{{ message }}</span>
               </div>
             </div>
@@ -102,7 +118,7 @@
                 </div>
                 <div class="col-md-3 pr-1">
                   <div class="form-group">
-                      <label class="mr-sm-2" for="inlineFormCustomSelect">Motivo do desligamento:</label>
+                      <label class="mr-sm-2" for="inlineFormCustomSelect">Motivo do desligamento</label>
                       <select class="custom-select mr-sm-2" id="cancelNoticeReasonId" formControlName="cancelNoticeReasonId">
                           <option [selected]="" disabled [ngValue]="null">Motivo do cancelamento do aviso prévio</option>
                           <option *ngFor="let item of reasonsCancelingNotice" value="{{ item.id }}">{{ item.name }}</option>
