@@ -71,7 +71,8 @@
                   </td>
                   <td>
                     <div class="col-auto my-1">
-                      <a class="btn btn-primary" (click)="exportMessage(item.id, item.name, actionEmployee)">Exportar</a>
+                      <a *ngIf="allowExport" class="btn btn-primary" (click)="exportMessage(item.id, item.name, actionEmployee)">Exportar</a>
+                      <button *ngIf="!allowExport" class="btn" disabled>Exportar</button>
                     </div>
                   </td>
                 </tr>

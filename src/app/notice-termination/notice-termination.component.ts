@@ -5,6 +5,7 @@ import { Router, RouterOutlet, ActivationStart } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {NgbModal, ModalDismissReasons, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 import { APINoticeTerminationService } from '../services/apinotice-termination.service';
+import { NoticeTerminationDTO } from '../models/noticetermination.dto';
 
 @Component({
   selector: 'app-notice-termination',
@@ -28,6 +29,7 @@ export class NoticeTerminationComponent implements OnInit {
   public totalPages:number = 0;
   public currentPage:number = 1;
   public action:string = '';
+  public allowExport:boolean = false;
 
   public employeeId:string = '';
   public status:number = -1;
@@ -37,9 +39,10 @@ export class NoticeTerminationComponent implements OnInit {
   
   constructor(private router: Router, private formBuilder:FormBuilder, private modalService: NgbModal, private apiDomainService:APIDomainService,
      private apiNoticeTerminationService:APINoticeTerminationService) {
-    this.fGFilterCompany = this.formBuilder.group({
-      companyId:[null, [Validators.required]],
-      exported:[null, [Validators.required]]
+    this.fGFilterCompany = this.formBuilder.
+      group({
+        companyId:[null, [Validators.required]],
+        exported:[null, [Validators.required]]
     });
   }
 
@@ -48,8 +51,8 @@ export class NoticeTerminationComponent implements OnInit {
       if (e instanceof ActivationStart && e.snapshot.outlet === "administration")
         this.outlet.deactivate();
     });
-    this.apiDomainService.getDomains('companies').subscribe(
-      (domains:DomainDTO[]) => {
+    this.apiDomainService.getDomains('companies').
+      subscribe((domains:DomainDTO[]) => {
         this.companies = domains;
       },
       (error:any) => {
@@ -67,6 +70,9 @@ export class NoticeTerminationComponent implements OnInit {
       this.message = 'Selecione um filtro exportados Sim ou Não.';
     }else{
       this.currentPage = 1;
+      if(this.fGFilterCompany.value['exported'] === 'N'){
+        this.allowExport = true;
+      }
       this.getEmployees();
     }
   }
@@ -74,8 +80,8 @@ export class NoticeTerminationComponent implements OnInit {
   private getEmployees():void{
     let resource:string = '/employees/company/'+this.fGFilterCompany.value['companyId']+
       '?exported='+this.fGFilterCompany.value['exported']+'&page=' + (this.currentPage - 1);
-    this.apiDomainService.getDomains(resource).subscribe(
-      (domains:DomainDTO[]) => {
+    this.apiDomainService.getDomains(resource).
+      subscribe((domains:DomainDTO[]) => {
         this.employees = domains['content'];
         this.totalPages = domains['totalPages'];
       },
@@ -117,18 +123,27 @@ export class NoticeTerminationComponent implements OnInit {
   }
 
   public deleteMessage(id:string, name:string, content):void{
-    this.titleModal = 'Alerta';
-    this.messageModal = `Deseja exluir o Aviso Prévio Trabalhado / Idenizado do colaborador ${id} - ${name}?`;
-    this.actiomModal = 'Excluir';
     this.employeeId = id;
+    this.apiNoticeTerminationService.getNoticeTermination(`terminationotices/employee/${this.employeeId}`).
+      subscribe((noticeTermination:NoticeTerminationDTO) => {
+        if(noticeTermination === null){
+          this.messageModal = `Não existe o Aviso Prévio Trabalhado / Idenizado para o colaborador ${this.employeeId} - ${name}`;
+          this.actiomModal = 'alert';
+        }else{
+          this.titleModal = 'Alerta';
+          this.messageModal = `Deseja exluir o Aviso Prévio Trabalhado / Idenizado do colaborador ${this.employeeId} - ${name}?`;
+          this.actiomModal = 'Excluir';
+        }
+      }
+    );
     this.openAlert(content);
   }
 
   public delete():void{
     if(this.modalService.hasOpenModals){
       this.modalService.dismissAll();
-      this.apiNoticeTerminationService.delete(`terminationotices/${this.employeeId}`).subscribe(
-        (data) => {
+      this.apiNoticeTerminationService.delete(`terminationotices/${this.employeeId}`).
+        subscribe((response) => {
           this.status = 0;
           this.message = 'Aviso Prévio Trabalhado / Idenizado excluído com sucesso.';
         },
@@ -138,7 +153,6 @@ export class NoticeTerminationComponent implements OnInit {
           console.log(error);
         }
       )
-      this.message = 'Aviso Prévio Trabalhado / Idenizado excluído com sucesso';
     }
   }
 
@@ -153,7 +167,17 @@ export class NoticeTerminationComponent implements OnInit {
   public export():void{
     if(this.modalService.hasOpenModals){
       this.modalService.dismissAll();
-      this.message = 'Empregado exportado com sucesso';
+      this.apiNoticeTerminationService.export(`terminationotices/${this.employeeId}`, 'S').
+      subscribe((response) => {
+          this.status = 0;
+          this.message = 'Aviso Prévio Trabalhado / Idenizado exportado com sucesso.';
+        },
+        error => {
+          this.status = 1;
+          this.message = 'Erro ao tentar exportar o Prévio Trabalhado / Idenizado';
+          console.log(error);
+        }
+      )
     }
   }
 

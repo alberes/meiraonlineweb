@@ -11,5 +11,6 @@ export class NoticeTerminationDTO{
     noticeTypeWorkedId:number;
     cancelDate:Date;
     cancelNoticeReasonId:number;
+    export:string;
     employee:Employee
 }
