@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DomainDTO } from '../models/domain.dto';
 import { APIDomainService } from '../services/apidomain.service';
 import { Router, RouterOutlet, ActivationStart } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import {NgbModal, ModalDismissReasons, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 import { APINoticeTerminationService } from '../services/apinotice-termination.service';
 import { NoticeTerminationDTO } from '../models/noticetermination.dto';
@@ -28,7 +28,6 @@ export class NoticeTerminationComponent implements OnInit {
 
   public totalPages:number = 0;
   public currentPage:number = 1;
-  public action:string = '';
   public allowExport:boolean = false;
 
   public employeeId:string = '';
@@ -41,8 +40,8 @@ export class NoticeTerminationComponent implements OnInit {
      private apiNoticeTerminationService:APINoticeTerminationService) {
     this.fGFilterCompany = this.formBuilder.
       group({
-        companyId:[null, [Validators.required]],
-        exported:[null, [Validators.required]]
+        companyId: new FormControl(null, Validators.required),
+        exported: new FormControl(null, Validators.required)
     });
   }
 
@@ -63,18 +62,19 @@ export class NoticeTerminationComponent implements OnInit {
   }
 
   public filterCompany():void{
-    this.message = '';
-    if(this.fGFilterCompany.value['companyId'] == null){
-      this.message = 'Selecione uma empresa.';
-    }else if(this.fGFilterCompany.value['exported'] == null){
-      this.message = 'Selecione um filtro exportados Sim ou Não.';
-    }else{
-      this.currentPage = 1;
-      if(this.fGFilterCompany.value['exported'] === 'N'){
-        this.allowExport = true;
-      }
-      this.getEmployees();
+    this.currentPage = 1;
+    if(this.fGFilterCompany.value['exported'] === 'N'){
+      this.allowExport = true;
     }
+    this.getEmployees();
+  }
+
+  get companyId():any{
+    return this.fGFilterCompany.get('companyId');
+  }
+
+  get exported():any{
+    return this.fGFilterCompany.get('exported');
   }
 
   private getEmployees():void{
@@ -157,10 +157,19 @@ export class NoticeTerminationComponent implements OnInit {
   }
 
   public exportMessage(id:string, name:string, content):void{
-    this.titleModal = 'Alerta';
-    this.messageModal = `Deseja exportar o Aviso Prévio Trabalhado / Idenizado do colaborador ${id} - ${name}?`;
-    this.actiomModal = 'Exportar';
     this.employeeId = id;
+    this.apiNoticeTerminationService.getNoticeTermination(`terminationotices/employee/${this.employeeId}`).
+      subscribe((noticeTermination:NoticeTerminationDTO) => {
+        if(noticeTermination === null){
+          this.messageModal = `Não existe o Aviso Prévio Trabalhado / Idenizado para o colaborador ${this.employeeId} - ${name}`;
+          this.actiomModal = 'alert';
+        }else{
+          this.titleModal = 'Alerta';
+          this.messageModal = `Deseja exportar o Aviso Prévio Trabalhado / Idenizado do colaborador ${this.employeeId} - ${name}?`;
+          this.actiomModal = 'Exportar';
+        }
+      }
+    );
     this.openAlert(content);
   }
 
@@ -171,6 +180,7 @@ export class NoticeTerminationComponent implements OnInit {
       subscribe((response) => {
           this.status = 0;
           this.message = 'Aviso Prévio Trabalhado / Idenizado exportado com sucesso.';
+          this.getEmployees();
         },
         error => {
           this.status = 1;

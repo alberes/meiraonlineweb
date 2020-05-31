@@ -9,7 +9,16 @@
         </div>
         <div class="card-body">
           <form [formGroup]="fGFilterCompany" (submit)="filterCompany()">
-            <div *ngIf="status === 1">
+            <div *ngIf="(companyId.invalid && companyId.dirty) || (exported.invalid && exported.dirty)">
+              <div class="alert alert-danger">
+                <button type="button" aria-hidden="true" class="close">
+                  <i class="now-ui-icons ui-1_simple-remove"></i>
+                </button>
+                <span *ngIf="companyId.invalid">Selecione uma empresa.</span>
+                <span *ngIf="exported.invalid">Selecione um filtro exportados Sim ou Não.</span>
+              </div>
+            </div>
+            <div *ngIf="status === 0">
               <div class="alert alert-danger">
                 <button type="button" aria-hidden="true" class="close">
                   <i class="now-ui-icons ui-1_simple-remove"></i>
@@ -34,7 +43,7 @@
                 </select>                
               </div>
               <div class="col-auto my-1">
-                <label class="mr-sm-2" for="inlineFormCustomSelect">Empresa</label>
+                <label class="mr-sm-2" for="inlineFormCustomSelect">Exportados</label>
                 <select class="custom-select mr-sm-2" id="exported" formControlName="exported">
                   <option [selected]="" disabled [ngValue]="null">Exportados</option>
                     <option value="S">Sim</option>
@@ -42,7 +51,7 @@
                 </select>
               </div>
               <div class="col-auto my-1">
-                <button type="submit" class="btn btn-primary">Filtrar</button>
+                <button type="submit" class="btn btn-primary" [disabled]="companyId.invalid || exported.invalid">Filtrar</button>
               </div>   
             </div>
           </form>
@@ -72,7 +81,7 @@
                   <td>
                     <div class="col-auto my-1">
                       <a *ngIf="allowExport" class="btn btn-primary" (click)="exportMessage(item.id, item.name, actionEmployee)">Exportar</a>
-                      <button *ngIf="!allowExport" class="btn" disabled>Exportar</button>
+                      <button *ngIf="!allowExport" class="btn" [disabled]="!allowExport">Exportar</button>
                     </div>
                   </td>
                 </tr>

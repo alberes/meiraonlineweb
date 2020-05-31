@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomainDTO } from '../models/domain.dto';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { APIDomainService } from '../services/apidomain.service';
 import {NgbModal, ModalDismissReasons, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
@@ -42,16 +42,16 @@ export class NoticeTerminationSaveComponent implements OnInit {
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private formBuilder:FormBuilder, private modalService: NgbModal, 
     private apiDomainService:APIDomainService, private apiNoticeTerminationService:APINoticeTerminationService) {
     this.fGNoticeTermination = this.formBuilder.group({
-      employeeId:[null, [Validators.required]],
-      noticeReasonId:[null, [Validators.required]],
-      noticeDate:[null, [Validators.required]],
-      lastDay:[null, [Validators.required]],
-      endDate:[null, [Validators.required]],      
-      noticeStatus:[null, [Validators.required]],
-      noticeTypeId:[null, [Validators.required]],
-      cancelDate:[null, [Validators.required]],
-      noticeTypeWorkedId:[null, [Validators.required]],
-      cancelNoticeReasonId:[null, [Validators.required]]
+      employeeId: new FormControl({value: null, disabled: true}, Validators.required),
+      noticeReasonId: new FormControl(null, Validators.required),
+      noticeDate: new FormControl(null, Validators.required),
+      lastDay: new FormControl(null, Validators.required),
+      endDate: new FormControl(null, Validators.required),  
+      noticeStatus: new FormControl(null, Validators.required),
+      noticeTypeId: new FormControl(null, Validators.required),
+      cancelDate: new FormControl(null, Validators.required),
+      noticeTypeWorkedId: new FormControl(null, Validators.required),
+      cancelNoticeReasonId: new FormControl(null, Validators.required)
     });
   }
 
