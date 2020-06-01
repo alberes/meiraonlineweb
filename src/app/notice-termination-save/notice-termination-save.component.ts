@@ -101,7 +101,7 @@ export class NoticeTerminationSaveComponent implements OnInit {
         subscribe((noticeTermination:NoticeTerminationDTO) => {
           this.noticeTerminationDTO = noticeTermination;
           if(this.noticeTerminationDTO !== null){
-            this.getEmployees();
+            this.fillEmployees(null);
             this.tofGNoticeTermination();
             this.messageModal = `Deseja atualizar o Aviso Prévio Trabalhado / Idenizado?`;
             this.actiomModal = 'Atualizar';
@@ -110,6 +110,7 @@ export class NoticeTerminationSaveComponent implements OnInit {
             this.actiomModal = 'Salvar';
             this.noticeTerminationDTO = new NoticeTerminationDTO();
             this.noticeTerminationDTO.employee = new Employee();
+            this.getEmployee();
             this.tofGNoticeTermination();
           }
         },
@@ -170,12 +171,33 @@ export class NoticeTerminationSaveComponent implements OnInit {
     }
   }
 
-  private getEmployees():void{
-    this.employees.push({
-      id: this.noticeTerminationDTO.employee.id + '',
-      name: this.noticeTerminationDTO.employee.name,
-      value: ''
-    });
+  private getEmployee():void{
+    let resource:string = `employees/${this.employeeId}`;
+    this.apiDomainService.getEmployee(resource).
+      subscribe((domain:DomainDTO) => {
+        this.fillEmployees(domain);
+      },
+      (error:any) => {
+        this.error = error;
+        console.log(this.error);
+      }
+    );
+  }
+
+  private fillEmployees(domain:DomainDTO):void{
+    if(domain === null){
+      this.employees.push({
+        id: this.noticeTerminationDTO.employee.id + '',
+        name: this.noticeTerminationDTO.employee.name,
+        value: ''
+      });
+    }else{
+      this.employees.push({
+        id: domain.id,
+        name: domain.name,
+        value: ''
+      });
+    }
   }
 
   private toNoticeTerminationDTO():void{
@@ -193,7 +215,7 @@ export class NoticeTerminationSaveComponent implements OnInit {
 
   private tofGNoticeTermination():void{
     this.fGNoticeTermination = this.formBuilder.group({
-      employeeId:[this.noticeTerminationDTO.employee.id, [Validators.required]],
+      employeeId:[this.employeeId, [Validators.required]],
       noticeReasonId:[this.noticeTerminationDTO.noticeReasonId, [Validators.required]],
       noticeDate:[this.noticeTerminationDTO.noticeDate, [Validators.required]],
       lastDay:[this.noticeTerminationDTO.lastDay, [Validators.required]],

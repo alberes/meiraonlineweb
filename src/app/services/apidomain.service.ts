@@ -14,4 +14,8 @@ export class APIDomainService {
   public getDomains(resource:string):Observable<DomainDTO[]>{
     return this.httpClient.get<DomainDTO[]>(`${API_MF_CONFIG.baseUrlDomain}/${resource}`);
   }
+
+  public getEmployee(resource:string):Observable<DomainDTO>{
+    return this.httpClient.get<DomainDTO>(`${API_MF_CONFIG.baseUrlDomain}/${resource}`);
+  }
 }
