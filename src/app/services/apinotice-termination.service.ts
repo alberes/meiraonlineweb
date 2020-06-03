@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { NoticeTerminationDTO } from '../models/noticetermination.dto';
 import { Observable, throwError } from 'rxjs';
 import { API_MF_CONFIG } from '../config/api.config';
@@ -13,14 +13,17 @@ export class APINoticeTerminationService {
 
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type':  'application/json'
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Access-Control-Allow-Headers': 'Content-Type',
     })
   };
 
+//sudo lsof -t -i tcp:4200 | xargs kill -9
   constructor(private httpClient:HttpClient) { }
 
   public create(resource:string, noticeTermination:NoticeTerminationDTO):Observable<any>{
-    return this.httpClient.post<any>(`${API_MF_CONFIG.baseUrl}/${resource}`, JSON.stringify(noticeTermination), this.httpOptions);
+    return this.httpClient.post<any>(`${API_MF_CONFIG.baseUrl}/${resource}`, noticeTermination, { observe: 'response' });
   }
 
   public getNoticeTermination(resource:string):Observable<NoticeTerminationDTO>{

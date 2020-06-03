@@ -1,7 +1,7 @@
 import { Employee } from './employee.dto';
 
 export class NoticeTerminationDTO{
-    id:number;
+    id:string;
     noticeTypeId:number;
     noticeReasonId:number;
     noticeDate:Date;

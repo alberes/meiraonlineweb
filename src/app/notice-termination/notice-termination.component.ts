@@ -78,7 +78,7 @@ export class NoticeTerminationComponent implements OnInit {
   }
 
   private getEmployees():void{
-    let resource:string = '/employees/company/'+this.fGFilterCompany.value['companyId']+
+    let resource:string = 'employees/company/'+this.fGFilterCompany.value['companyId']+
       '?exported='+this.fGFilterCompany.value['exported']+'&page=' + (this.currentPage - 1);
     this.apiDomainService.getDomains(resource).
       subscribe((domains:DomainDTO[]) => {

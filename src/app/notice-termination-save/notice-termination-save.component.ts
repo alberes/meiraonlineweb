@@ -157,9 +157,11 @@ export class NoticeTerminationSaveComponent implements OnInit {
         this.noticeTerminationDTO.export = 'N';
         this.apiNoticeTerminationService.create(`terminationotices`, this.noticeTerminationDTO).
         subscribe((response) => {
-          this.status = 0;
-          this.message = 'Aviso Prévio Trabalhado / Idenizado criado com sucesso';
-          this.actiomModal = 'Atualizar';
+            this.status = 0;
+            this.message = 'Aviso Prévio Trabalhado / Idenizado criado com sucesso';
+            this.actiomModal = 'Atualizar';
+            alert(JSON.stringify(response.headers))
+            this.noticeTerminationDTO.id = this.getId(response.headers.get('location'));
           },
           error => {
             this.status = 2;
@@ -169,6 +171,11 @@ export class NoticeTerminationSaveComponent implements OnInit {
         )
       }
     }
+  }
+
+  private getId(location:string) : string {
+    let position = location.lastIndexOf('/');
+    return location.substring(position + 1, location.length);
   }
 
   private getEmployee():void{
