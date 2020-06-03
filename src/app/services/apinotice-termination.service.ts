@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NoticeTerminationDTO } from '../models/noticetermination.dto';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { API_MF_CONFIG } from '../config/api.config';
 
 @Injectable({
@@ -19,7 +19,6 @@ export class APINoticeTerminationService {
     })
   };
 
-//sudo lsof -t -i tcp:4200 | xargs kill -9
   constructor(private httpClient:HttpClient) { }
 
   public create(resource:string, noticeTermination:NoticeTerminationDTO):Observable<any>{
