@@ -160,7 +160,6 @@ export class NoticeTerminationSaveComponent implements OnInit {
             this.status = 0;
             this.message = 'Aviso Prévio Trabalhado / Idenizado criado com sucesso';
             this.actiomModal = 'Atualizar';
-            alert(JSON.stringify(response.headers))
             this.noticeTerminationDTO.id = this.getId(response.headers.get('location'));
           },
           error => {
