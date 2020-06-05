@@ -31,11 +31,8 @@ export class APINoticeTerminationService {
     return this.httpClient.put<any>(`${API_MF_CONFIG.baseUrl}/${resource}`, JSON.stringify(noticeTermination), this.httpOptions);
   }
 
-  public export(resource:string, exportNoticeTermination:string):Observable<any>{
-    let bodyNotification = {
-      'export': exportNoticeTermination
-    }
-    return this.httpClient.patch<any>(`${API_MF_CONFIG.baseUrl}/${resource}`, JSON.stringify(bodyNotification), this.httpOptions);
+  public export(resource:string):Observable<any>{
+    return this.httpClient.patch<any>(`${API_MF_CONFIG.baseUrl}/${resource}`, null, this.httpOptions);
   }
 
   public delete(resource:string):Observable<any>{

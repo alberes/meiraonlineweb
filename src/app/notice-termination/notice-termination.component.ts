@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import {NgbModal, ModalDismissReasons, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 import { APINoticeTerminationService } from '../services/apinotice-termination.service';
 import { NoticeTerminationDTO } from '../models/noticetermination.dto';
+import { MessageDTO } from '../models/message.dto';
 
 @Component({
   selector: 'app-notice-termination',
@@ -176,10 +177,15 @@ export class NoticeTerminationComponent implements OnInit {
   public export():void{
     if(this.modalService.hasOpenModals){
       this.modalService.dismissAll();
-      this.apiNoticeTerminationService.export(`terminationotices/${this.employeeId}`, 'S').
-      subscribe((response) => {
-          this.status = 0;
-          this.message = 'Aviso Prévio Trabalhado / Idenizado exportado com sucesso.';
+      this.apiNoticeTerminationService.export(`terminationotices/export/${this.employeeId}`).
+      subscribe((response:MessageDTO) => {
+          if(response.status === 'OK'){
+            this.status = 0;
+            this.message = 'Aviso Prévio Trabalhado / Idenizado exportado com sucesso.';
+          }else{
+            this.status = 1;
+            this.message = 'Não foi encontrado Aviso Prévio Trabalhado / Idenizado.';
+          }          
           this.getEmployees();
         },
         error => {
