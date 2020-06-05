@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { AdminLayoutModule } from './layouts/admin-layout/admin-layout.module';
 import { NoticeTerminationSaveComponent } from './notice-termination-save/notice-termination-save.component';
+import { SickLeaveComponent } from './sick-leave/sick-leave.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,10 @@ const routes: Routes = [
       {
         path: 'notice-termination-save/:employeeId',
         component: NoticeTerminationSaveComponent
+      },
+      {
+        path: 'sick-leave',
+        component: SickLeaveComponent
       }
     ]}
 ];

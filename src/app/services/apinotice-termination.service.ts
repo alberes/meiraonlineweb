@@ -9,8 +9,6 @@ import { API_MF_CONFIG } from '../config/api.config';
 })
 export class APINoticeTerminationService {
 
-  public meiraError:any;
-
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',

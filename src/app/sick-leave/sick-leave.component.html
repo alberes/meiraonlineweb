@@ -1,0 +1,124 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card card-plain">
+        <div class="card-header">
+          <p class="category">Afastamento Temporário</p>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="fGFilterCompany" (submit)="filterCompany()">
+            <div *ngIf="(companyId.invalid && companyId.dirty) || (exported.invalid && exported.dirty)">
+              <div class="alert alert-danger">
+                <button type="button" aria-hidden="true" class="close">
+                  <i class="now-ui-icons ui-1_simple-remove"></i>
+                </button>
+                <span *ngIf="companyId.invalid">Selecione uma empresa.</span>
+                <span *ngIf="exported.invalid">Selecione um filtro exportados Sim ou Não.</span>
+              </div>
+            </div>
+            <div *ngIf="status === 1">
+              <div class="alert alert-danger">
+                <button type="button" aria-hidden="true" class="close">
+                  <i class="now-ui-icons ui-1_simple-remove"></i>
+                </button>
+                <span>{{ message }}</span>
+              </div>
+            </div>
+            <div *ngIf="status === 0">
+              <div class="alert alert-success">
+                <button type="button" aria-hidden="true" class="close">
+                  <i class="now-ui-icons ui-1_simple-remove"></i>
+                </button>
+                <span>{{ message }}</span>
+              </div>
+            </div>
+            <div class="form-row align-items-center">
+              <div class="col-auto my-1">
+                <label class="mr-sm-2" for="inlineFormCustomSelect">Empresa</label>
+                <select class="custom-select mr-sm-2" id="companyId" formControlName="companyId">
+                  <option [selected]="" disabled [ngValue]="null">Selecione uma empresa</option>
+                  <option *ngFor="let item of companies" value="{{ item.id }}">{{ item.name }}</option>
+                </select>                
+              </div>
+              <div class="col-auto my-1">
+                <label class="mr-sm-2" for="inlineFormCustomSelect">Exportados</label>
+                <select class="custom-select mr-sm-2" id="exported" formControlName="exported">
+                  <option [selected]="" disabled [ngValue]="null">Exportados</option>
+                    <option value="S">Sim</option>
+                    <option value="N">não</option>
+                </select>
+              </div>
+              <div class="col-auto my-1">
+                <button type="submit" class="btn btn-primary" [disabled]="companyId.invalid || exported.invalid">Filtrar</button>
+              </div>   
+            </div>
+          </form>
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                  <th class="col-sm-12">
+                    Nome
+                  </th>
+                  <th class="col-sm-1">
+                    Exportar
+                  </th>
+                </thead>
+                <tbody class="employee">
+                <tr *ngFor="let item of employees; let even = even; let odd = odd">
+                  <td>
+                    <a [routerLink]="['/sick-leave-save', item.id]">{{ item.name }}</a>
+                  </td>
+                  <td>
+                    <div class="col-auto my-1">
+                      <a *ngIf="allowExport" class="btn btn-primary" (click)="exportMessage(item.id, item.name, actionEmployee)">Exportar</a>
+                      <button *ngIf="!allowExport" class="btn" [disabled]="!allowExport">Exportar</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div data-toggle="buttons" class="btn-group">
+            <button (click)="first()" mat-raised-button="" type="button" class="btn btn-round btn-info mat-raised-button mat-button-base">
+               <span class="mat-button-wrapper"><<</span>
+               <div matripple="" class="mat-ripple mat-button-ripple"></div>
+               <div class="mat-button-focus-overlay"></div>
+            </button>
+            <button (click)="rewind()" mat-raised-button="" type="button" class="btn btn-round btn-info mat-raised-button mat-button-base">
+               <span class="mat-button-wrapper"><</span>
+               <div matripple="" class="mat-ripple mat-button-ripple"></div>
+               <div class="mat-button-focus-overlay"></div>
+            </button>
+            <button (click)="forward()" mat-raised-button="" type="button" class="btn btn-round btn-info mat-raised-button mat-button-base">
+               <span class="mat-button-wrapper">&gt;</span>
+               <div matripple="" class="mat-ripple mat-button-ripple"></div>
+               <div class="mat-button-focus-overlay"></div>
+            </button>
+            <button (click)="last()" mat-raised-button="" type="button" class="btn btn-round btn-info mat-raised-button mat-button-base">
+               <span class="mat-button-wrapper">&gt;&gt;</span>
+               <div matripple="" class="mat-ripple mat-button-ripple"></div>
+               <div class="mat-button-focus-overlay"></div>
+            </button>
+         </div>
+        </div>
+        <ng-template #actionEmployee let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">{{ titleModal }}</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {{ messageModal }}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancelar</button>
+            <button *ngIf="actiomModal === 'Exportar'" type="button" class="btn btn-outline-dark" (click)="export()">{{ actiomModal }}</button>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

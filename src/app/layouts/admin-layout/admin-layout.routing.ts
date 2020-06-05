@@ -2,8 +2,10 @@ import { Routes } from '@angular/router';
 
 import { NoticeTerminationComponent } from '../../notice-termination/notice-termination.component'; 
 import { NoticeTerminationSaveComponent } from '../../notice-termination-save/notice-termination-save.component';
+import { SickLeaveComponent } from 'src/app/sick-leave/sick-leave.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'notice-termination', component: NoticeTerminationComponent},
-    { path: 'notice-termination-save/:employeeId', component: NoticeTerminationSaveComponent}
+    { path: 'notice-termination-save/:employeeId', component: NoticeTerminationSaveComponent},
+    { path: 'sick-leave', component: SickLeaveComponent}
 ];
