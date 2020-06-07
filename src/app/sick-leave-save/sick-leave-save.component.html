@@ -1,0 +1,349 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-9">
+      <div class="card">
+        <div class="card-header">
+            <p class="category">Afastamento Temporário</p>
+        </div>
+        <div class="card-body">
+          <div *ngIf="actiomModal === 'Salvar'">
+            <form [formGroup]="fGSickLeave" novalidate="" class="ng-untouched ng-pristine ng-valid">
+              <div *ngIf="status === 1">
+                <div class="alert alert-danger">
+                  <button type="button" aria-hidden="true" class="close">
+                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                  </button>
+                  <span *ngIf="fGSickLeaveField('sickNumber').invalid">Atestado</span>
+                  <span *ngIf="fGSickLeaveField('reasonSickLeave').invalid">Motivo do Afastamento</span>
+                  <span *ngIf="fGSickLeaveField('startDate').invalid">Data de ínicio</span>
+                  <span *ngIf="fGSickLeaveField('quantity').invalid">Qtde. dias</span>
+                  <span *ngIf="fGSickLeaveField('endDate').invalid">Data do término</span>
+                  <span *ngIf="fGSickLeaveField('noticeStatus').invalid">Mesmo motivo anterior</span>
+                  <span *ngIf="fGSickLeaveField('trafficAccidentType').invalid">Tipo de acidente de Trânsito</span>
+                  <span *ngIf="fGSickLeaveField('detailSickLeave').invalid">Detalhar as informações sobre o afastamento do trabalhandor</span>  
+                  <span *ngIf="fGSickLeaveField('cid').invalid">CID</span>
+                  <span *ngIf="fGSickLeaveField('doctorName').invalid">Nome do médico/Dentista que emitiu o atestado</span>
+                  <span *ngIf="fGSickLeaveField('organClass').invalid">Orgão/Classe</span>
+                  <span *ngIf="fGSickLeaveField('classOrganRegistration').invalid">Inscrição no Orgão de Classe</span>
+                  <span *ngIf="fGSickLeaveField('state').invalid">Estado</span>
+                  <span *ngIf="fGSickLeaveField('rectification').invalid">Retificação do afastamento</span>
+                  <span *ngIf="fGSickLeaveField('rectificationOrigin').invalid">Origem da Retificação</span>
+                  <span *ngIf="fGSickLeaveField('processType').invalid">Tipo do Processo</span>
+                  <span *ngIf="fGSickLeaveField('processNumber').invalid">Número do Processo Administrativo/Judicial</span>
+                  <span *ngIf="fGSickLeaveField('responsibleCompensation').invalid">Responsável pela Remuneração</span>
+                  <span *ngIf="fGSickLeaveField('laborUnion').invalid">Sindicato</span>
+                </div>
+              </div>
+              <div *ngIf="status === 2">
+                <div class="alert alert-danger">
+                  <button type="button" aria-hidden="true" class="close">
+                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                  </button>
+                  <span>{{ message }}</span>
+                </div>
+              </div>
+              <div *ngIf="status === 0">
+                <div class="alert alert-success">
+                  <button type="button" aria-hidden="true" class="close">
+                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                  </button>
+                  <span>{{ message }}</span>
+                </div>
+              </div>
+              <div class="row left-pad25">
+                <div class="col-md-4 pr-1">
+                    <div class="form-group">
+                      <label class="mr-sm-2" for="inlineFormCustomSelect">Empregado</label>
+                      <select class="custom-select mr-sm-2" id="employeeId" formControlName="employeeId">
+                        <option *ngFor="let item of employees" value="{{ item.id }}">{{ item.name }}</option>
+                      </select>
+                    </div>
+                </div>
+                <div class="col-md-3 px-1">
+                    <div class="form-group">
+                      <label>Atestado</label>
+                      <input class="form-control" placeholder="Número do atestado" type="text" value="" formControlName="sickNumber">
+                    </div>
+                </div>
+                <div class="col-md-4 pr-1">
+                  <div class="form-group">
+                    <label class="mr-sm-2" for="inlineFormCustomSelect">Motivo do Afastamento</label>
+                    <select class="custom-select mr-sm-2" id="reasonSick" formControlName="reasonSickLeave">
+                      <option *ngFor="let item of employees" value="{{ item.id }}">{{ item.name }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row left-pad25">
+                <div class="col-md-2 pr-1">
+                  <div class="form-group">
+                    <label class="mr-sm-2">Data de ínicio</label>
+                    <input type="date" id="startDate" name="startDate" class="form-control" formControlName="startDate">
+                  </div>
+                </div>
+                <div class="col-md-2 px-1">
+                  <div class="form-group">
+                    <label>Qtde. dias</label>
+                    <input class="form-control" placeholder="Quantidade de dias" type="number" value="" min="0" formControlName="quantity">
+                  </div>
+              </div>
+                <div class="col-md-2 pr-1">
+                  <div class="form-group">
+                    <label class="mr-sm-2">Data do término</label>
+                    <input type="date" id="endDate" name="endDate" class="form-control" formControlName="endDate">
+                  </div>
+                </div>
+                <div class="col-md-2 pr-1">
+                  <div class="form-group">
+                      <label class="mr-sm-2" for="inlineFormCustomSelect">Mesmo motivo anterior</label>
+                      <select class="custom-select mr-sm-2" id="noticeStatus" formControlName="noticeStatus">
+                          <option [selected]="" disabled [ngValue]="null">Motivo anterior</option>
+                          <option value="S">Sim</option>
+                          <option value="N">não</option>
+                      </select>                    
+                  </div>
+                </div>
+                <div class="col-md-3 pr-1">
+                  <div class="form-group">
+                      <label class="mr-sm-3" for="inlineFormCustomSelect">Tipo de acidente de Trânsito</label>
+                      <select class="custom-select mr-sm-2" id="trafficAccidentType" formControlName="trafficAccidentType">
+                          <option [selected]="" disabled [ngValue]="null">Acidente de Trânsito</option>
+                          <option value="1">Atropelamento</option>
+                          <option value="2">Colisão</option>
+                          <option value="3">Outros</option>
+                      </select>                    
+                  </div>
+                </div>
+              </div>
+              <div class="row left-pad25">
+                <div class="col-md-11 pr-1">
+                  <div class=" form-group">
+                    <label class=" form-control-label">Detalhar as informações sobre o afastamento do trabalhandor</label>
+                    <textarea class=" form-control" id="detailSickLeave" resize="none" rows="5" maxlength="255" formControlName="detailSickLeave"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="row left-pad32">
+                <div class="col-md-3 px-1">
+                  <div class="form-group">
+                    <label>CID</label>
+                    <input class="form-control" placeholder="CID" type="text" value="" formControlName="cid">
+                  </div>
+                </div>
+                <div class="col-md-8 px-1">
+                  <div class="form-group">
+                    <label>Descrição</label>
+                    <input class="form-control" type="text" value="" id="descriptionCID" formControlName="descriptionCID">
+                  </div>
+                </div>          
+              </div>
+              <div class="row left-pad32">
+                <div class="col-md-8 px-1">
+                  <div class="form-group">
+                    <label>Nome do médico/Dentista que emitiu o atestado</label>
+                    <input class="form-control" type="text" value="" formControlName="doctorName">
+                  </div>
+                </div>
+                <div class="col-md-3 pr-1">
+                  <div class="form-group">
+                      <label class="mr-sm-3" for="inlineFormCustomSelect">Orgão/Classe</label>
+                      <select class="custom-select mr-sm-2" id="organClass" formControlName="organClass">
+                          <option [selected]="" disabled [ngValue]="null">Orgão/Classe</option>
+                          <option value="1">CRD</option>
+                          <option value="2">CRO</option>
+                          <option value="3">RMS</option>
+                      </select>                    
+                  </div>
+                </div>
+              </div>
+              <div class="row left-pad32">
+                <div class="col-md-4 px-1">
+                  <div class="form-group">
+                    <label>Inscrição no Orgão de Classe</label>
+                    <input class="form-control" type="text" value="" formControlName="classOrganRegistration">
+                  </div>
+                </div>
+                <div class="col-md-4 pr-1">
+                  <div class="form-group">
+                      <label class="mr-sm-4" for="inlineFormCustomSelect">Estado</label>
+                      <select class="custom-select mr-sm-2" id="state" formControlName="state">
+                          <option [selected]="" disabled [ngValue]="null">Estado</option>
+                          <option value="SP">São Paulo</option>
+                          <option value="MG">Minas Gerais</option>
+                          <option value="RN">Rio Grande do Norte</option>
+                      </select>                    
+                  </div>
+                </div>
+                <div class="col-md-3 pr-1">
+                  <div class="form-group">
+                      <label class="mr-sm-4" for="inlineFormCustomSelect">Retificação do afastamento</label>
+                      <select class="custom-select mr-sm-2" id="rectification" formControlName="rectification">
+                          <option [selected]="" disabled [ngValue]="null">Motivo anterior</option>
+                          <option value="S">Sim</option>
+                          <option value="N">não</option>
+                      </select>                    
+                  </div>
+                </div>
+              </div>
+              <div class="row left-pad25">
+                <div class="col-md-4 pr-1">
+                  <div class="form-group">
+                      <label class="mr-sm-4" for="inlineFormCustomSelect">Origem da Retificação</label>
+                      <select class="custom-select mr-sm-2" id="rectificationOrigin" formControlName="rectificationOrigin">
+                          <option [selected]="" disabled [ngValue]="null">Origem da Retificação</option>
+                          <option value="1">Por iniciativa do empregador</option>
+                          <option value="2">Revisão Administrativa</option>
+                          <option value="3">Determinação Judicial</option>
+                      </select>                    
+                  </div>
+                </div>
+                <div class="col-md-3 pr-1">
+                  <div class="form-group">
+                      <label class="mr-sm-4" for="inlineFormCustomSelect">Tipo do Processo</label>
+                      <select class="custom-select mr-sm-2" id="processType" formControlName="processType">
+                          <option [selected]="" disabled [ngValue]="null">Tipo do Processo</option>
+                          <option value="1">Administrativo</option>
+                          <option value="2">Judicial</option>
+                          <option value="3">Determinação Judicial</option>
+                      </select>                    
+                  </div>
+                </div>              
+                <div class="col-md-4 px-1">
+                  <div class="form-group">
+                    <label>Número do Processo Administrativo/Judicial</label>
+                    <input class="form-control" type="text" value="" formControlName="processNumber">
+                  </div>
+                </div>
+              </div>
+              <div class="row left-pad25">
+                <div class="col-md-4 pr-1">
+                  <div class="form-group">
+                      <label class="mr-sm-4" for="inlineFormCustomSelect">Responsável pela Remuneração</label>
+                      <select class="custom-select mr-sm-2" id="responsibleCompensation" formControlName="responsibleCompensation">
+                          <option [selected]="" disabled [ngValue]="null">Responsável pela Remuneração</option>
+                          <option value="1">Sindicato</option>
+                          <option value="2">Empregador</option>
+                          <option value="3">Dif. Paga pelo Sindicato</option>
+                      </select>      
+                  </div>
+                </div>
+                <div class="col-md-4 pr-1">
+                  <div class="form-group">
+                      <label class="mr-sm-4" for="inlineFormCustomSelect">Sindicato</label>
+                      <select class="custom-select mr-sm-2" id="responsibleCompensation" formControlName="laborUnion">
+                          <option [selected]="" disabled [ngValue]="null">Sindicato</option>
+                          <option value="1">Sindicato</option>
+                          <option value="2">Empregador</option>
+                          <option value="3">Dif. Paga pelo Sindicato</option>
+                      </select>      
+                  </div>
+                </div>
+                <div class="col-md-3 px-1">
+                  <div class="form-group">
+                    <label>CNPJ</label>
+                    <input class="form-control" type="text" value="" formControlName="documentNumber">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-10 px-1">
+                </div>
+                <div class="col-auto my-1">
+                  <button type="submit" class="btn btn-primary" (click)="saveMessage(actionSickLeave)">Salvar</button>
+                </div>
+              </div>              
+            </form>
+          </div>
+          <div *ngIf="actiomModal === 'listar'">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class=" text-primary">
+                    <th class="th-sm-1">
+                      Atestado
+                    </th>
+                    <th class="th-sm-1">
+                      Inicio
+                    </th>
+                    <th class="th-sm-1">
+                      Término
+                    </th>
+                    <th class="th-sm-1">
+                      CID
+                    </th>
+                    <th class="th-sm-4">
+                      Médico/Dentista
+                    </th>
+                    <th class="th-sm-1">
+                      Excluir
+                    </th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of sickLeaves; let even = even; let odd = odd">
+                      <td>
+                        <a [routerLink]="['/sick-leave-save', item.id]">{{ item.sickNumber }}</a>
+                      </td>
+                      <td>
+                        {{ item.startDate }}
+                      </td>
+                      <td>
+                        {{ item.endDate }}
+                      </td>
+                      <td>
+                        {{ item.cid }}
+                      </td>
+                      <td>
+                        {{ item.doctorName }}
+                      </td>
+                      <td>
+                        <a class="btn btn-primary" (click)="deleteMessage(item.id, item.sickNumber, actionSickLeave)">Excluir</a>
+                      </td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+            <div data-toggle="buttons" class="btn-group">
+              <button (click)="first()" mat-raised-button="" type="button" class="btn btn-round btn-info mat-raised-button mat-button-base">
+                 <span class="mat-button-wrapper"><<</span>
+                 <div matripple="" class="mat-ripple mat-button-ripple"></div>
+                 <div class="mat-button-focus-overlay"></div>
+              </button>
+              <button (click)="rewind()" mat-raised-button="" type="button" class="btn btn-round btn-info mat-raised-button mat-button-base">
+                 <span class="mat-button-wrapper"><</span>
+                 <div matripple="" class="mat-ripple mat-button-ripple"></div>
+                 <div class="mat-button-focus-overlay"></div>
+              </button>
+              <button (click)="forward()" mat-raised-button="" type="button" class="btn btn-round btn-info mat-raised-button mat-button-base">
+                 <span class="mat-button-wrapper">&gt;</span>
+                 <div matripple="" class="mat-ripple mat-button-ripple"></div>
+                 <div class="mat-button-focus-overlay"></div>
+              </button>
+              <button (click)="last()" mat-raised-button="" type="button" class="btn btn-round btn-info mat-raised-button mat-button-base">
+                 <span class="mat-button-wrapper">&gt;&gt;</span>
+                 <div matripple="" class="mat-ripple mat-button-ripple"></div>
+                 <div class="mat-button-focus-overlay"></div>
+              </button>
+           </div>
+          </div>
+          <ng-template #actionSickLeave let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title">{{ titleModal }}</h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              {{ messageModal }}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancelar</button>
+              <button *ngIf="actiomModal === 'Salvar'" type="submit" class="btn btn-outline-dark" (click)="save()">{{ actiomModal }}</button>
+              <button *ngIf="actiomModal === 'Excluir'" type="submit" class="btn btn-outline-dark" (click)="delete()">{{ actiomModal }}</button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

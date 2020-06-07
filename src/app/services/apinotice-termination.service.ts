@@ -19,7 +19,7 @@ export class APINoticeTerminationService {
 
   constructor(private httpClient:HttpClient) { }
 
-  public create(resource:string, noticeTermination:NoticeTerminationDTO):Observable<any>{
+  public save(resource:string, noticeTermination:NoticeTerminationDTO):Observable<any>{
     return this.httpClient.post<any>(`${API_MF_CONFIG.baseUrl}/${resource}`, noticeTermination, { observe: 'response' });
   }
 
@@ -28,7 +28,7 @@ export class APINoticeTerminationService {
   }
 
   public update(resource:string, noticeTermination:NoticeTerminationDTO):Observable<any>{
-    return this.httpClient.put<any>(`${API_MF_CONFIG.baseUrl}/${resource}`, JSON.stringify(noticeTermination), this.httpOptions);
+    return this.httpClient.put<any>(`${API_MF_CONFIG.baseUrl}/${resource}`, noticeTermination, this.httpOptions);
   }
 
   public export(resource:string):Observable<any>{

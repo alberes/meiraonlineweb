@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet, ActivationStart } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { NgbModal, NgbModalOptions, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { APIDomainService } from '../services/apidomain.service';
 import { DomainDTO } from '../models/domain.dto';
 import { APISickLeaveService } from '../services/apisick-leave.service';
-import { SickLeaveDTO } from '../models/sickleave.dto';
 import { MessageDTO } from '../models/message.dto';
 
 @Component({
@@ -48,10 +47,10 @@ export class SickLeaveComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*this.router.events.subscribe(e => {
+    this.router.events.subscribe(e => {
       if (e instanceof ActivationStart && e.snapshot.outlet === "administration")
         this.outlet.deactivate();
-    });*/
+    });
     this.apiDomainService.getDomains('companies').
       subscribe((domains:DomainDTO[]) => {
         this.companies = domains;
@@ -97,7 +96,7 @@ export class SickLeaveComponent implements OnInit {
     this.openAlert(content);
   }
 
-  private getEmployees():void{
+  private getEmployees():void{    
     let resource:string = 'employees/company/'+this.fGFilterCompany.value['companyId']+
       '?exported='+this.fGFilterCompany.value['exported']+'&page=' + (this.currentPage - 1);
     this.apiDomainService.getDomains(resource).
@@ -137,7 +136,6 @@ export class SickLeaveComponent implements OnInit {
       this.getEmployees();
     }
   }
-
 
   public export():void{
     if(this.modalService.hasOpenModals){

@@ -14,15 +14,15 @@
                 <button type="button" aria-hidden="true" class="close">
                   <i class="now-ui-icons ui-1_simple-remove"></i>
                 </button>
-                <span *ngIf="noticeTypeId.invalid">Tipo de aviso</span>
-                <span *ngIf="noticeReasonId.invalid">Motivo do desligamento</span>
-                <span *ngIf="noticeDate.invalid">Data da com. do aviso</span>
-                <span *ngIf="lastDay.invalid">Data do último dia de trabalho</span>
-                <span *ngIf="endDate.invalid">Data prevista do desligamento</span>
-                <span *ngIf="noticeStatus.invalid">Cancelar o aviso prévio</span>
-                <span *ngIf="noticeTypeWorkedId.invalid">Tipo de aviso prévio trabalhado</span>
-                <span *ngIf="cancelDate.invalid">Data cancelamento o aviso</span>
-                <span *ngIf="cancelNoticeReasonId.invalid">Motivo do desligamento</span>
+                <span *ngIf="fGNoticeTerminationField('noticeTypeId').invalid">Tipo de aviso</span>
+                <span *ngIf="fGNoticeTerminationField('noticeReasonId').invalid">Motivo do desligamento</span>
+                <span *ngIf="fGNoticeTerminationField('noticeDate').invalid">Data da com. do aviso</span>
+                <span *ngIf="fGNoticeTerminationField('lastDay').invalid">Data do último dia de trabalho</span>
+                <span *ngIf="fGNoticeTerminationField('endDate').invalid">Data prevista do desligamento</span>
+                <span *ngIf="fGNoticeTerminationField('noticeStatus').invalid">Cancelar o aviso prévio</span>
+                <span *ngIf="fGNoticeTerminationField('noticeTypeWorkedId').invalid">Tipo de aviso prévio trabalhado</span>
+                <span *ngIf="fGNoticeTerminationField('cancelDate').invalid">Data cancelamento o aviso</span>
+                <span *ngIf="fGNoticeTerminationField('cancelNoticeReasonId').invalid">Motivo do desligamento</span>
               </div>
             </div>
             <div *ngIf="status === 2">

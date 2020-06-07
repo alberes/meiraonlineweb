@@ -155,7 +155,7 @@ export class NoticeTerminationSaveComponent implements OnInit {
           );
       }else{
         this.noticeTerminationDTO.export = 'N';
-        this.apiNoticeTerminationService.create(`terminationotices`, this.noticeTerminationDTO).
+        this.apiNoticeTerminationService.save(`terminationotices`, this.noticeTerminationDTO).
         subscribe((response) => {
             this.status = 0;
             this.message = 'Aviso Prévio Trabalhado / Idenizado criado com sucesso';
@@ -164,8 +164,9 @@ export class NoticeTerminationSaveComponent implements OnInit {
           },
           error => {
             this.status = 2;
-              this.message = 'Erro ao tentar criar o Prévio Trabalhado / Idenizado';
-              console.log(error);
+            this.message = 'Erro ao tentar criar o Prévio Trabalhado / Idenizado';
+            this.error = error;
+            console.log(this.error);
           }
         )
       }
@@ -252,40 +253,8 @@ export class NoticeTerminationSaveComponent implements OnInit {
     }
   }
 
-  get noticeReasonId():any{
-    return this.fGNoticeTermination.get('noticeReasonId');
+  public fGNoticeTerminationField(field:string):any{
+    return this.fGNoticeTermination.get(field);
   }
-
-  get noticeDate():any{
-    return this.fGNoticeTermination.get('noticeDate');
-  }
-
-  get lastDay():any{
-    return this.fGNoticeTermination.get('lastDay');
-  }
-
-  get endDate():any{
-    return this.fGNoticeTermination.get('endDate');
-  }
-
-  get noticeStatus():any{
-    return this.fGNoticeTermination.get('noticeStatus');
-  }
-
-  get noticeTypeId():any{
-    return this.fGNoticeTermination.get('noticeTypeId');
-  }
-
-  get noticeTypeWorkedId():any{
-    return this.fGNoticeTermination.get('noticeTypeWorkedId');
-  }
-
-  get cancelDate():any{
-    return this.fGNoticeTermination.get('cancelDate');
-  }
-
-  get cancelNoticeReasonId():any{
-    return this.fGNoticeTermination.get('cancelNoticeReasonId');
-  }
-  
+    
 }

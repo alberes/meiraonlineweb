@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AdminLayoutModule } from './layouts/admin-layout/admin-layout.module';
 import { NoticeTerminationSaveComponent } from './notice-termination-save/notice-termination-save.component';
 import { SickLeaveComponent } from './sick-leave/sick-leave.component';
+import { SickLeaveSaveComponent } from './sick-leave-save/sick-leave-save.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,10 @@ const routes: Routes = [
       {
         path: 'sick-leave',
         component: SickLeaveComponent
+      },
+      {
+        path: 'sick-leave-save/:employeeId',
+        component: SickLeaveSaveComponent
       }
     ]}
 ];

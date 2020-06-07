@@ -12,6 +12,7 @@ import { APIDomainService } from './services/apidomain.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { APINoticeTerminationService } from './services/apinotice-termination.service';
 import { HttpErrorMeiraInterceptor } from './services/exception/http-error.interceptor';
+import { SickLeaveSaveComponent } from './sick-leave-save/sick-leave-save.component';
 
 @NgModule({
   declarations: [

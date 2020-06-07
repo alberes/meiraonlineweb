@@ -3,13 +3,26 @@ import { Employee } from './employee.dto';
 export class SickLeaveDTO{
     id:string;
     sickNumber:string;
-    reason:string;
+    reasonSickLeave:string;
     startDate:Date;
-    endDate:Date;
     quantity:number;
+    endDate:Date;
+    noticeStatus:string;
+    trafficAccidentType:string;
+    detailSickLeave  :string;
+    cid:string;
+    descriptionCID:string;
     doctorName:string;
-    organ:string;
-    institution:string;
+    organClass:string;
+    classOrganRegistration:string;
+    state:string;
+    rectification:string;
+    rectificationOrigin:string;
+    processType:string;
+    processNumber:string;
+    responsibleCompensation:string;
+    laborUnion:string;
+    documentNumber:string;
     export:string;
     employee:Employee
 }
