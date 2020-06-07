@@ -8,7 +8,23 @@
             <p class="category">Afastamento Temporário</p>
         </div>
         <div class="card-body">
-          <div *ngIf="actiomModal === 'Salvar'">
+          <div *ngIf="status === 2">
+            <div class="alert alert-danger">
+              <button type="button" aria-hidden="true" class="close">
+                <i class="now-ui-icons ui-1_simple-remove"></i>
+              </button>
+              <span>{{ message }}</span>
+            </div>
+          </div>
+          <div *ngIf="status === 0">
+            <div class="alert alert-success">
+              <button type="button" aria-hidden="true" class="close">
+                <i class="now-ui-icons ui-1_simple-remove"></i>
+              </button>
+              <span>{{ message }}</span>
+            </div>
+          </div>
+          <div *ngIf="actiomModal === 'Salvar' || actiomModal === 'Atualizar'">
             <form [formGroup]="fGSickLeave" novalidate="" class="ng-untouched ng-pristine ng-valid">
               <div *ngIf="status === 1">
                 <div class="alert alert-danger">
@@ -35,23 +51,7 @@
                   <span *ngIf="fGSickLeaveField('responsibleCompensation').invalid">Responsável pela Remuneração</span>
                   <span *ngIf="fGSickLeaveField('laborUnion').invalid">Sindicato</span>
                 </div>
-              </div>
-              <div *ngIf="status === 2">
-                <div class="alert alert-danger">
-                  <button type="button" aria-hidden="true" class="close">
-                    <i class="now-ui-icons ui-1_simple-remove"></i>
-                  </button>
-                  <span>{{ message }}</span>
-                </div>
-              </div>
-              <div *ngIf="status === 0">
-                <div class="alert alert-success">
-                  <button type="button" aria-hidden="true" class="close">
-                    <i class="now-ui-icons ui-1_simple-remove"></i>
-                  </button>
-                  <span>{{ message }}</span>
-                </div>
-              </div>
+              </div>              
               <div class="row left-pad25">
                 <div class="col-md-4 pr-1">
                     <div class="form-group">
@@ -251,12 +251,17 @@
                 <div class="col-md-10 px-1">
                 </div>
                 <div class="col-auto my-1">
-                  <button type="submit" class="btn btn-primary" (click)="saveMessage(actionSickLeave)">Salvar</button>
+                  <button type="submit" class="btn btn-primary" (click)="saveMessage(actionSickLeave)">{{ actiomModal }}</button>
                 </div>
               </div>              
             </form>
           </div>
           <div *ngIf="actiomModal === 'listar'">
+            <div class="row">
+              <div class="col-auto my-1">
+                <button type="submit" class="btn btn-primary" (click)="addSickLeave()">Adicionar</button>
+              </div>   
+            </div>
             <div class="table-responsive">
               <table class="table">
                 <thead class=" text-primary">
@@ -281,8 +286,8 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let item of sickLeaves; let even = even; let odd = odd">
-                      <td>
-                        <a [routerLink]="['/sick-leave-save', item.id]">{{ item.sickNumber }}</a>
+                      <td (click)="edit(item.id)" class="event-id">
+                        {{ item.sickNumber }}
                       </td>
                       <td>
                         {{ item.startDate }}
@@ -324,6 +329,11 @@
                  <div matripple="" class="mat-ripple mat-button-ripple"></div>
                  <div class="mat-button-focus-overlay"></div>
               </button>
+              <button mat-raised-button="" type="button" class="btn btn-round btn-info mat-raised-button mat-button-base">
+                <span class="mat-button-wrapper">Página {{ currentPage }} de {{ totalPages }}</span>
+                <div matripple="" class="mat-ripple mat-button-ripple"></div>
+                <div class="mat-button-focus-overlay"></div>
+             </button>              
            </div>
           </div>
           <ng-template #actionSickLeave let-modal>
@@ -338,7 +348,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancelar</button>
-              <button *ngIf="actiomModal === 'Salvar'" type="submit" class="btn btn-outline-dark" (click)="save()">{{ actiomModal }}</button>
+              <button *ngIf="actiomModal === 'Salvar' || actiomModal === 'Atualizar'" type="submit" class="btn btn-outline-dark" (click)="save()">{{ actiomModal }}</button>
               <button *ngIf="actiomModal === 'Excluir'" type="submit" class="btn btn-outline-dark" (click)="delete()">{{ actiomModal }}</button>
             </div>
           </ng-template>

@@ -34,8 +34,8 @@ export class SickLeaveSaveComponent implements OnInit {
   public status:number = -1;
   public message:string = '';
 
-  private totalPages:number = 0;
-  private currentPage:number = 1;
+  public totalPages:number = 0;
+  public currentPage:number = 1;
   
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private formBuilder:FormBuilder, private modalService: NgbModal, 
     private apiDomainService:APIDomainService, private apiSickLeaveService:APISickLeaveService, private apiEmployeeService:APIEmployeeService) {
@@ -151,6 +151,11 @@ export class SickLeaveSaveComponent implements OnInit {
     this.sickLeaveDTO.employee = this.employeeDTO;
   }
 
+  public addSickLeave():void{
+    this.actiomModal = 'Salvar';
+    this.sickLeaveDTO = new SickLeaveDTO();
+  }
+
   public saveMessage(content):void{
     if(this.fGSickLeave.get('sickNumber').invalid || this.fGSickLeave.get('reasonSickLeave').invalid ||
       this.fGSickLeave.get('startDate').invalid || this.fGSickLeave.get('quantity').invalid ||
@@ -178,6 +183,8 @@ export class SickLeaveSaveComponent implements OnInit {
         subscribe((response) => {
           this.status = 0;
           this.message = 'Afastamento Temporário com sucesso';
+          this.actiomModal = 'listar';
+          this.getSickLeaves();
         },
           error => {
             this.status = 2;
@@ -191,8 +198,9 @@ export class SickLeaveSaveComponent implements OnInit {
         subscribe(response => {
           this.status = 0;
           this.message = 'Afastamento Temporário criado com sucesso';
-          this.actiomModal = 'Atualizar';
           this.sickLeaveDTO.id = this.getId(response.headers.get('location'));
+          this.actiomModal = 'listar';
+          this.getSickLeaves();
         },
         (error:any) => {
           this.status = 2;
@@ -211,10 +219,6 @@ export class SickLeaveSaveComponent implements OnInit {
   }
 
   private getSickLeaves() {
-    let params = new HttpParams();
-    params.append('page',`${(this.currentPage - 1)}`);
-    params.append('orderBy', '10');
-    params.append('linesPerPage', 'id');
     let resource:string = `sickleaves/employee/${this.employeeDTO.id}?page=${(this.currentPage - 1)}&linesPerPage=10&orderBy=id`;
     this.apiSickLeaveService.getSickLeaveByEmployee(resource).
         subscribe(response => {
@@ -227,6 +231,17 @@ export class SickLeaveSaveComponent implements OnInit {
           }
         );
   }
+
+  public edit(id:string):void{
+    this.sickLeaves.forEach(s => {
+      if(s.id === id){
+        this.sickLeaveDTO = s;
+        this.tofGSickLeave();
+        this.actiomModal = 'Atualizar';
+      }
+    });
+  }
+
   public deleteMessage(id:string, sickNumber:string, content):void{
     this.apiSickLeaveService.getSickLeave(`sickleaves/${id}`).
       subscribe((sickleave:SickLeaveDTO) => {
@@ -250,14 +265,16 @@ export class SickLeaveSaveComponent implements OnInit {
       this.apiSickLeaveService.delete(`sickleaves/${this.sickLeaveDTO.id}`).
         subscribe((response) => {
           this.status = 0;
-          this.message = `Afastamento Temporário ${this.sickLeaveDTO.id} - ${this.sickLeaveDTO.sickNumber} excluído com sucesso.`;
+          this.message = `Afastamento Temporário ${this.sickLeaveDTO.id} - ${this.sickLeaveDTO.sickNumber} excluído com sucesso.`; 
+          this.actiomModal = 'listar';
+          this.getSickLeaves();
         },
         error => {
-          this.status = 1;
+          this.status = 2;
           this.message = `Erro ao tentar excluir o Afastamento Temporário ${this.sickLeaveDTO.id} - ${this.sickLeaveDTO.sickNumber}`;
           console.log(error);
         }
-      )
+      );      
     }
   }
 

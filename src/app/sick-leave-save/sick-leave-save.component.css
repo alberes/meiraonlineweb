@@ -5,3 +5,12 @@
 .left-pad32{
     padding-left: 32px;
 }
+
+.label-page{
+    color: #4CB5FD;
+    margin-left: 5px;
+}
+
+.event-id{
+    color: #4CB5FD;
+}
