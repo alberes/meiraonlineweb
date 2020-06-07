@@ -33,7 +33,7 @@ export class NoticeTerminationSaveComponent implements OnInit {
   public message:string = '';
 
   private totalPages:number = 0;
-  private currentPage:number = 1;
+  private currentPage:number = 0;
 
   public fGNoticeTermination:FormGroup;
   private employeeId:string;

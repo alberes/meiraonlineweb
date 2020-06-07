@@ -35,7 +35,7 @@ export class SickLeaveSaveComponent implements OnInit {
   public message:string = '';
 
   public totalPages:number = 0;
-  public currentPage:number = 1;
+  public currentPage:number = 0;
   
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private formBuilder:FormBuilder, private modalService: NgbModal, 
     private apiDomainService:APIDomainService, private apiSickLeaveService:APISickLeaveService, private apiEmployeeService:APIEmployeeService) {
@@ -182,7 +182,7 @@ export class SickLeaveSaveComponent implements OnInit {
         this.apiSickLeaveService.update(`sickleaves/${this.sickLeaveDTO.id}`, this.sickLeaveDTO).
         subscribe((response) => {
           this.status = 0;
-          this.message = 'Afastamento Temporário com sucesso';
+          this.message = `Afastamento Temporário atualizado ${this.sickLeaveDTO.id} - ${this.sickLeaveDTO.sickNumber} com sucesso.`;
           this.actiomModal = 'listar';
           this.getSickLeaves();
         },
@@ -197,8 +197,8 @@ export class SickLeaveSaveComponent implements OnInit {
         this.apiSickLeaveService.save('sickleaves', this.sickLeaveDTO).
         subscribe(response => {
           this.status = 0;
-          this.message = 'Afastamento Temporário criado com sucesso';
           this.sickLeaveDTO.id = this.getId(response.headers.get('location'));
+          this.message = `Afastamento Temporário criado ${this.sickLeaveDTO.id} - ${this.sickLeaveDTO.sickNumber} com sucesso.`;
           this.actiomModal = 'listar';
           this.getSickLeaves();
         },
@@ -219,6 +219,9 @@ export class SickLeaveSaveComponent implements OnInit {
   }
 
   private getSickLeaves() {
+    if(this.currentPage === 0){
+      this.currentPage = 1;
+    }
     let resource:string = `sickleaves/employee/${this.employeeDTO.id}?page=${(this.currentPage - 1)}&linesPerPage=10&orderBy=id`;
     this.apiSickLeaveService.getSickLeaveByEmployee(resource).
         subscribe(response => {

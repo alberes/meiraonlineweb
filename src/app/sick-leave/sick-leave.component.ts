@@ -28,7 +28,7 @@ export class SickLeaveComponent implements OnInit {
   public actiomModal:string = '';
 
   public totalPages:number = 0;
-  public currentPage:number = 1;
+  public currentPage:number = 0;
   public allowExport:boolean = false;
 
   public employeeId:string = '';
