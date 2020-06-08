@@ -15,6 +15,7 @@ import { MessageDTO } from '../models/message.dto';
 })
 export class NoticeTerminationComponent implements OnInit {
 
+  public title:string = 'Aviso Prévio Trabalhado / Idenizado';
   public companies: DomainDTO[];
   public employees: DomainDTO[];
 

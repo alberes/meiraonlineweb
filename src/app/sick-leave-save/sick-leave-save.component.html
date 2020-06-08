@@ -5,7 +5,7 @@
     <div class="col-md-9">
       <div class="card">
         <div class="card-header">
-            <p class="category">Afastamento Temporário</p>
+            <p class="category">{{ title }}</p>
         </div>
         <div class="card-body">
           <div *ngIf="status === 2">
@@ -248,7 +248,10 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-10 px-1">
+                <div class="col-md-8 px-1">
+                </div>
+                <div class="col-auto my-1">
+                  <button type="submit" class="btn btn-primary" (click)="listSickLeave()">Lista de Atestado</button>
                 </div>
                 <div class="col-auto my-1">
                   <button type="submit" class="btn btn-primary" (click)="saveMessage(actionSickLeave)">{{ actiomModal }}</button>
@@ -257,7 +260,7 @@
             </form>
           </div>
           <div *ngIf="actiomModal === 'listar'">
-            <div class="row">
+            <div class="row">               
               <div class="col-auto my-1">
                 <button type="submit" class="btn btn-primary" (click)="addSickLeave()">Adicionar</button>
               </div>   
@@ -319,6 +322,11 @@
                  <div matripple="" class="mat-ripple mat-button-ripple"></div>
                  <div class="mat-button-focus-overlay"></div>
               </button>
+              <button  mat-raised-button="" type="button" class="btn btn-round btn-info mat-raised-button mat-button-base">
+                <span class="mat-button-wrapper">Página {{ currentPage }} de {{ totalPages }}</span>
+                <div matripple="" class="mat-ripple mat-button-ripple"></div>
+                <div class="mat-button-focus-overlay"></div>
+             </button>   
               <button (click)="forward()" mat-raised-button="" type="button" class="btn btn-round btn-info mat-raised-button mat-button-base">
                  <span class="mat-button-wrapper">&gt;</span>
                  <div matripple="" class="mat-ripple mat-button-ripple"></div>
@@ -328,12 +336,7 @@
                  <span class="mat-button-wrapper">&gt;&gt;</span>
                  <div matripple="" class="mat-ripple mat-button-ripple"></div>
                  <div class="mat-button-focus-overlay"></div>
-              </button>
-              <button mat-raised-button="" type="button" class="btn btn-round btn-info mat-raised-button mat-button-base">
-                <span class="mat-button-wrapper">Página {{ currentPage }} de {{ totalPages }}</span>
-                <div matripple="" class="mat-ripple mat-button-ripple"></div>
-                <div class="mat-button-focus-overlay"></div>
-             </button>              
+              </button>                         
            </div>
           </div>
           <ng-template #actionSickLeave let-modal>

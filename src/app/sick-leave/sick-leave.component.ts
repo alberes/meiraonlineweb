@@ -14,6 +14,7 @@ import { MessageDTO } from '../models/message.dto';
 })
 export class SickLeaveComponent implements OnInit {
 
+  public title:string = 'Afastamento Temporário';
   public companies: DomainDTO[];
   public employees: DomainDTO[];
   

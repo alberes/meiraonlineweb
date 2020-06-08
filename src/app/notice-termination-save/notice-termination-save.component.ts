@@ -15,6 +15,7 @@ import { Employee } from '../models/employee.dto';
 })
 export class NoticeTerminationSaveComponent implements OnInit {
 
+  public title:string = 'Aviso Prévio Trabalhado / Idenizado';
   public employees: Array<DomainDTO> = [];
   public typesNotices: DomainDTO[];
   public reasonsNotices: DomainDTO[];

@@ -17,6 +17,7 @@ import { HttpParams } from '@angular/common/http';
 })
 export class SickLeaveSaveComponent implements OnInit {
 
+  public title:string = 'Afastamento Temporário';
   public employees: Array<DomainDTO> = [];
   public fGSickLeave:FormGroup;
   private sickLeaveDTO:SickLeaveDTO;
@@ -279,6 +280,10 @@ export class SickLeaveSaveComponent implements OnInit {
         }
       );      
     }
+  }
+
+  public listSickLeave():void{
+    this.actiomModal = 'listar';
   }
 
   public first():void{
