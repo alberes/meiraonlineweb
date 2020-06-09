@@ -105,16 +105,16 @@ export class SchoolCalendarComponent implements OnInit {
       subscribe((response:MessageDTO) => {
         this.status = 0;
         if(response.status === 'OK'){
-          this.message = 'Calendário Escolar exportado com sucesso.';
+          this.message = `${this.title} exportado com sucesso.`;
         }else{
           this.status = 1;
-          this.message = 'Não foi encontrado Calendário Escolar.';
+          this.message = `Não foi encontrado ${this.title}.`;
         }
           this.getSchoolCalendars();
         },
         error => {
           this.status = 1;
-          this.message = 'Erro ao tentar exportar o Calendário Escolar.';
+          this.message = `Erro ao tentar exportar o ${this.title}.`;
           console.log(error);
         }
       )
@@ -127,11 +127,11 @@ export class SchoolCalendarComponent implements OnInit {
       subscribe((sickleaves:any) => {
         let total:number = Number(sickleaves['totalElements']);
         if(total === 0){
-          this.messageModal = `Não existe o Calendário Escolar o ${this.schoolCalendarDTO.id}.`;
+          this.messageModal = `Não existe o ${this.title} o ${this.schoolCalendarDTO.id}.`;
           this.actiomModal = 'alert';
         }else{
           this.titleModal = 'Alerta';
-          this.messageModal = `Deseja exportar o Calendário Escolar o ${this.schoolCalendarDTO.id}.?`;
+          this.messageModal = `Deseja exportar o ${this.title} o ${this.schoolCalendarDTO.id}.?`;
           this.actiomModal = 'Exportar';
         }
       }

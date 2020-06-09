@@ -72,8 +72,7 @@ export class NoticeTerminationComponent implements OnInit {
   }
   
   private getEmployees():void{
-    let resource:string = 'employees/company/'+this.fGFilterCompany.value['companyId']+
-      '?exported='+this.fGFilterCompany.value['exported']+'&page=' + (this.currentPage - 1);
+    let resource:string = `employees/company/${this.fGFilterCompany.value['companyId']}?exported=${this.fGFilterCompany.value['exported']}&page=${(this.currentPage - 1)}`;
     this.apiDomainService.getDomains(resource).
       subscribe((domains:DomainDTO[]) => {
         this.employees = domains['content'];
@@ -121,11 +120,12 @@ export class NoticeTerminationComponent implements OnInit {
     this.apiNoticeTerminationService.getNoticeTermination(`terminationotices/employee/${this.employeeId}`).
       subscribe((noticeTermination:NoticeTerminationDTO) => {
         if(noticeTermination === null){
-          this.messageModal = `Não existe o Aviso Prévio Trabalhado / Idenizado para o colaborador ${this.employeeId} - ${name}`;
+          this.titleModal = 'Alerta';
+          this.messageModal = `Não existe o ${this.title} para o colaborador ${this.employeeId} - ${name}`;
           this.actiomModal = 'alert';
         }else{
           this.titleModal = 'Alerta';
-          this.messageModal = `Deseja exluir o Aviso Prévio Trabalhado / Idenizado do colaborador ${this.employeeId} - ${name}?`;
+          this.messageModal = `Deseja exluir o ${this.title} do colaborador ${this.employeeId} - ${name}?`;
           this.actiomModal = 'Excluir';
         }
       }
@@ -139,11 +139,11 @@ export class NoticeTerminationComponent implements OnInit {
       this.apiNoticeTerminationService.delete(`terminationotices/${this.employeeId}`).
         subscribe((response) => {
           this.status = 0;
-          this.message = 'Aviso Prévio Trabalhado / Idenizado excluído com sucesso.';
+          this.message = '${this.title} excluído com sucesso.';
         },
         error => {
           this.status = 1;
-          this.message = 'Erro ao tentar excluir o Prévio Trabalhado / Idenizado';
+          this.message = `Erro ao tentar excluir o ${this.title}.`;
           console.log(error);
         }
       )
@@ -155,11 +155,12 @@ export class NoticeTerminationComponent implements OnInit {
     this.apiNoticeTerminationService.getNoticeTermination(`terminationotices/employee/${this.employeeId}`).
       subscribe((noticeTermination:NoticeTerminationDTO) => {
         if(noticeTermination === null){
-          this.messageModal = `Não existe o Aviso Prévio Trabalhado / Idenizado para o colaborador ${this.employeeId} - ${name}`;
-          this.actiomModal = 'alert';
+          this.titleModal = 'Alerta';
+          this.messageModal = `Não existe o ${this.title} para o colaborador ${this.employeeId} - ${name}.`;
+          this.actiomModal = 'Alert';
         }else{
           this.titleModal = 'Alerta';
-          this.messageModal = `Deseja exportar o Aviso Prévio Trabalhado / Idenizado do colaborador ${this.employeeId} - ${name}?`;
+          this.messageModal = `Deseja exportar o ${this.title} do colaborador ${this.employeeId} - ${name}?`;
           this.actiomModal = 'Exportar';
         }
       }
@@ -174,16 +175,16 @@ export class NoticeTerminationComponent implements OnInit {
       subscribe((response:MessageDTO) => {
           if(response.status === 'OK'){
             this.status = 0;
-            this.message = 'Aviso Prévio Trabalhado / Idenizado exportado com sucesso.';
+            this.message = `${this.title} exportado com sucesso.`;
           }else{
             this.status = 1;
-            this.message = 'Não foi encontrado Aviso Prévio Trabalhado / Idenizado.';
+            this.message = `Não foi encontrado ${this.title}.`;
           }          
           this.getEmployees();
         },
         error => {
           this.status = 1;
-          this.message = 'Erro ao tentar exportar o Prévio Trabalhado / Idenizado';
+          this.message = `Erro ao tentar exportar o ${this.title}.`;
           console.log(error);
         }
       )

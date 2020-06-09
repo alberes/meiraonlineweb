@@ -104,10 +104,10 @@ export class NoticeTerminationSaveComponent implements OnInit {
           if(this.noticeTerminationDTO !== null){
             this.fillEmployees(null);
             this.tofGNoticeTermination();
-            this.messageModal = `Deseja atualizar o Aviso Prévio Trabalhado / Idenizado?`;
+            this.messageModal = `Deseja atualizar o ${this.title}?`;
             this.actiomModal = 'Atualizar';
           }else{         
-            this.messageModal = `Deseja salvar o Aviso Prévio Trabalhado / Idenizado?`;
+            this.messageModal = `Deseja salvar o ${this.title}?`;
             this.actiomModal = 'Salvar';
             this.noticeTerminationDTO = new NoticeTerminationDTO();
             this.noticeTerminationDTO.employee = new Employee();
@@ -146,11 +146,11 @@ export class NoticeTerminationSaveComponent implements OnInit {
         this.apiNoticeTerminationService.update(`terminationotices/${this.noticeTerminationDTO.id}`, this.noticeTerminationDTO).
         subscribe((response) => {
             this.status = 0;
-            this.message = 'Aviso Prévio Trabalhado / Idenizado atualizado com sucesso';
+            this.message = `${this.title} atualizado com sucesso.`;
           },
             error => {
               this.status = 2;
-              this.message = 'Erro ao tentar atualizar o Prévio Trabalhado / Idenizado';
+              this.message = `Erro ao tentar atualizar o ${this.title}.`;
               console.log(error);
             }
           );
@@ -159,13 +159,13 @@ export class NoticeTerminationSaveComponent implements OnInit {
         this.apiNoticeTerminationService.save(`terminationotices`, this.noticeTerminationDTO).
         subscribe((response) => {
             this.status = 0;
-            this.message = 'Aviso Prévio Trabalhado / Idenizado criado com sucesso';
+            this.message = `${this.title} criado com sucesso.`;
             this.actiomModal = 'Atualizar';
             this.noticeTerminationDTO.id = this.getId(response.headers.get('location'));
           },
           error => {
             this.status = 2;
-            this.message = 'Erro ao tentar criar o Prévio Trabalhado / Idenizado';
+            this.message = `Erro ao tentar criar o ${this.title}.`;
             this.error = error;
             console.log(this.error);
           }

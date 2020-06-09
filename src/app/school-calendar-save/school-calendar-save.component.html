@@ -25,6 +25,29 @@
                 </div>
               </div>
             <form [formGroup]="fGSchoolCalendar" novalidate="" class="ng-untouched ng-pristine ng-valid">
+                <div *ngIf="status === 1">
+                    <div class="alert alert-danger">
+                      <button type="button" aria-hidden="true" class="close">
+                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                      </button>
+                      <span *ngIf="fGSchoolCalendarField('name').invalid">Calendario Escolar</span>
+                      <span *ngIf="fGSchoolCalendarField('yearReference').invalid">Ano Letivo - Ano referência</span>
+                      <span *ngIf="fGSchoolCalendarField('startDateSchoolYear').invalid">Ano Letivo - Data início</span>
+                      <span *ngIf="fGSchoolCalendarField('endDateSchoolYear').invalid">Ano Letivo - Data fim</span>
+                      <span *ngIf="fGSchoolCalendarField('startDateFirstHalf').invalid">Primeiro Semestre Letivo - Data início</span>
+                      <span *ngIf="fGSchoolCalendarField('endDateFirstHalf').invalid">Primeiro Semestre Letivo - Data do fim</span>
+                      <span *ngIf="fGSchoolCalendarField('startDateFirstHalfVacation').invalid">Primeiro Semestre Letivo - Data de início de férias</span>
+                      <span *ngIf="fGSchoolCalendarField('endDateFirstHalfVacation').invalid">Primeiro Semestre Letivo - Data do término das férias</span>
+                      <span *ngIf="fGSchoolCalendarField('startDateSecondHalf').invalid">Segundo Semestre Letivo - Data início</span>
+                      <span *ngIf="fGSchoolCalendarField('endDateSecondHalf').invalid">Segundo Semestre Letivo - Data do fim</span>
+                      <span *ngIf="fGSchoolCalendarField('startDateSecondHalfVacation').invalid">Segundo Semestre Letivo - Data de início de férias</span>
+                      <span *ngIf="fGSchoolCalendarField('endDateSecondHalfVacation').invalid">Segundo Semestre Letivo - Data do término das férias</span>
+                      <span *ngIf="fGSchoolCalendarField('startDateFirstHalfRecess').invalid">Primeiro Semestre Recesso - Data início</span>
+                      <span *ngIf="fGSchoolCalendarField('endDateFirstHalfRecess').invalid">Primeiro Semestre Recesso - Data do término</span>
+                      <span *ngIf="fGSchoolCalendarField('startDateSecondHalfRecess').invalid">Segundo Semestre Recesso - Data início</span>
+                      <span *ngIf="fGSchoolCalendarField('endDateSecondHalfRecess').invalid">Segundo Semestre Recesso - Data do término</span>
+                    </div>
+                </div>   
                 <div class="row left-pad35">
                     <div class="col-md-8 px-1">
                         <div class="form-group">

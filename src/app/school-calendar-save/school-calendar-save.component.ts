@@ -31,7 +31,7 @@ export class SchoolCalendarSaveComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute, private apiSchoolCalendarService:APISchoolCalendarService, private formBuilder:FormBuilder,
     private modalService:NgbModal) {
-    this.fGSchoolCalendar = this.formBuilder.group({
+    /*this.fGSchoolCalendar = this.formBuilder.group({
       name: new FormControl(null, Validators.required),
       yearReference: new FormControl(null, Validators.required),
       startDateSchoolYear: new FormControl(null, Validators.required),
@@ -48,10 +48,13 @@ export class SchoolCalendarSaveComponent implements OnInit {
       endDateFirstHalfRecess: new FormControl(null, Validators.required),
       startDateSecondHalfRecess: new FormControl(null, Validators.required),
       endDateSecondHalfRecess: new FormControl(null, Validators.required)
-    });
+    });*/
   }
 
   ngOnInit(): void {
+    this.actiomModal = 'Salvar';
+    this.schoolCalendarDTO = new SchoolCalendarDTO();
+    this.tofGSchoolCalendar();
     this.activatedRoute.paramMap.subscribe(params => {
       this.schoolCalendarDTO = new SchoolCalendarDTO();
       this.schoolCalendarDTO.id = params.get('id');
@@ -116,21 +119,22 @@ export class SchoolCalendarSaveComponent implements OnInit {
   }
 
   public saveMessage(content):void{
-    if(this.fGSchoolCalendar.value['name'].invalid || this.fGSchoolCalendar.value['yearReference'].invalid ||
-      this.fGSchoolCalendar.value['startDateSchoolYear'].invalid || this.fGSchoolCalendar.value['endDateSchoolYear'].invalid ||
-      this.fGSchoolCalendar.value['startDateFirstHalf'].invalid || this.fGSchoolCalendar.value['endDateFirstHalf'].invalid ||
-      this.fGSchoolCalendar.value['startDateFirstHalfVacation'].invalid || this.fGSchoolCalendar.value['endDateFirstHalfVacation'].invalid ||
-      this.fGSchoolCalendar.value['startDateSecondHalf'].invalid || this.fGSchoolCalendar.value['endDateSecondHalf'].invalid ||
-      this.fGSchoolCalendar.value['startDateSecondHalfVacation'].invalid || this.fGSchoolCalendar.value['endDateSecondHalfVacation'].invalid ||
-      this.fGSchoolCalendar.value['startDateFirstHalfRecess'].invalid || this.fGSchoolCalendar.value['endDateFirstHalfRecess'].invalid ||
-      this.fGSchoolCalendar.value['startDateSecondHalfRecess'].invalid ||this.fGSchoolCalendar.value['endDateSecondHalfRecess'].invalid){
+    if(this.fGSchoolCalendar.get('name').invalid || this.fGSchoolCalendar.get('yearReference').invalid ||
+      this.fGSchoolCalendar.get('startDateSchoolYear').invalid || this.fGSchoolCalendar.get('endDateSchoolYear').invalid ||
+      this.fGSchoolCalendar.get('startDateFirstHalf').invalid || this.fGSchoolCalendar.get('endDateFirstHalf').invalid ||
+      this.fGSchoolCalendar.get('startDateFirstHalfVacation').invalid || this.fGSchoolCalendar.get('endDateFirstHalfVacation').invalid ||
+      this.fGSchoolCalendar.get('startDateSecondHalf').invalid || this.fGSchoolCalendar.get('endDateSecondHalf').invalid ||
+      this.fGSchoolCalendar.get('startDateSecondHalfVacation').invalid || this.fGSchoolCalendar.get('endDateSecondHalfVacation').invalid ||
+      this.fGSchoolCalendar.get('startDateFirstHalfRecess').invalid || this.fGSchoolCalendar.get('endDateFirstHalfRecess').invalid ||
+      this.fGSchoolCalendar.get('startDateSecondHalfRecess').invalid ||this.fGSchoolCalendar.get('endDateSecondHalfRecess').invalid){
       this.status = 1;
     }else{
       this.titleModal = 'Alerta';
       if(this.actiomModal === 'Atualizar'){
         this.messageModal = `Deseja atualizar ${this.schoolCalendarDTO.id} - ${this.schoolCalendarDTO.name}?`;
       }else{
-        this.messageModal = `Deseja salvar ${this.schoolCalendarDTO.id} - ${this.schoolCalendarDTO.name}?`;
+        this.messageModal = `Deseja salvar ${this.title}?`;
+        this.actiomModal = 'Atualizar';
       }
       this.openAlert(content);
     }

@@ -65,7 +65,7 @@ export class SickLeaveSaveComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.messageModal = `Deseja salvar o Afastamento Temporário?`;
+    this.messageModal = `Deseja salvar o ${this.title}?`;
     this.actiomModal = 'listar';
     this.activatedRoute.paramMap.subscribe(params => {
       this.employeeDTO = new Employee();
@@ -181,14 +181,14 @@ export class SickLeaveSaveComponent implements OnInit {
         this.apiSickLeaveService.update(`sickleaves/${this.sickLeaveDTO.id}`, this.sickLeaveDTO).
         subscribe((response) => {
           this.status = 0;
-          this.message = `Afastamento Temporário atualizado ${this.sickLeaveDTO.id} - ${this.sickLeaveDTO.sickNumber} com sucesso.`;
+          this.message = `${this.title} atualizado ${this.sickLeaveDTO.id} - ${this.sickLeaveDTO.sickNumber} com sucesso.`;
           this.actiomModal = 'listar';
           this.getSickLeaves();
         },
           error => {
             this.error = error;
             this.status = 2;
-            this.message = 'Erro ao tentar atualizar o Afastamento Temporário';
+            this.message = `Erro ao tentar atualizar o ${this.title}.`;
             console.log(error);
           }
         );
@@ -198,13 +198,13 @@ export class SickLeaveSaveComponent implements OnInit {
         subscribe(response => {
           this.status = 0;
           this.sickLeaveDTO.id = this.getId(response.headers.get('location'));
-          this.message = `Afastamento Temporário criado ${this.sickLeaveDTO.id} - ${this.sickLeaveDTO.sickNumber} com sucesso.`;
+          this.message = `${this.title} criado ${this.sickLeaveDTO.id} - ${this.sickLeaveDTO.sickNumber} com sucesso.`;
           this.actiomModal = 'listar';
           this.getSickLeaves();
         },
         (error:any) => {
           this.status = 2;
-          this.message = 'Erro ao tentar criar o Afastamento Temporário';
+          this.message = `Erro ao tentar criar o ${this.title}.`;
           this.error = error;
           console.log(this.error);
         }
@@ -246,15 +246,16 @@ export class SickLeaveSaveComponent implements OnInit {
   }
 
   public deleteMessage(id:string, sickNumber:string, content):void{
+    this.status = -1;
     this.apiSickLeaveService.getSickLeave(`sickleaves/${id}`).
       subscribe((sickleave:SickLeaveDTO) => {
         if(sickleave === null){
-          this.messageModal = `Não existe o Afastamento Temporário ${id} - ${sickNumber}`;
+          this.messageModal = `Não existe o ${this.title} ${id} - ${sickNumber}`;
           this.actiomModal = 'Alert';
         }else{
           this.sickLeaveDTO = sickleave;
           this.titleModal = 'Alerta';
-          this.messageModal = `Deseja exluir Afastamento Temporário ${this.sickLeaveDTO.id} - ${this.sickLeaveDTO.sickNumber}?`;
+          this.messageModal = `Deseja exluir ${this.title} ${this.sickLeaveDTO.id} - ${this.sickLeaveDTO.sickNumber}?`;
           this.actiomModal = 'Excluir';
         }
       }
@@ -268,13 +269,13 @@ export class SickLeaveSaveComponent implements OnInit {
       this.apiSickLeaveService.delete(`sickleaves/${this.sickLeaveDTO.id}`).
         subscribe((response) => {
           this.status = 0;
-          this.message = `Afastamento Temporário ${this.sickLeaveDTO.id} - ${this.sickLeaveDTO.sickNumber} excluído com sucesso.`; 
+          this.message = `${this.title} ${this.sickLeaveDTO.id} - ${this.sickLeaveDTO.sickNumber} excluído com sucesso.`; 
           this.actiomModal = 'listar';
           this.getSickLeaves();
         },
         error => {
           this.status = 2;
-          this.message = `Erro ao tentar excluir o Afastamento Temporário ${this.sickLeaveDTO.id} - ${this.sickLeaveDTO.sickNumber}`;
+          this.message = `Erro ao tentar excluir o ${this.title} ${this.sickLeaveDTO.id} - ${this.sickLeaveDTO.sickNumber}`;
           console.log(error);
         }
       );      
