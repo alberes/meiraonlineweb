@@ -179,4 +179,8 @@ export class SickLeaveComponent implements OnInit {
     }
   }
 
+  public fGFilterCompanyField(field:string):any{
+    return this.fGFilterCompany.get(field);
+  }
+
 }

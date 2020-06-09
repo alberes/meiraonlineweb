@@ -70,15 +70,7 @@ export class NoticeTerminationComponent implements OnInit {
     }
     this.getEmployees();
   }
-
-  get companyId():any{
-    return this.fGFilterCompany.get('companyId');
-  }
-
-  get exported():any{
-    return this.fGFilterCompany.get('exported');
-  }
-
+  
   private getEmployees():void{
     let resource:string = 'employees/company/'+this.fGFilterCompany.value['companyId']+
       '?exported='+this.fGFilterCompany.value['exported']+'&page=' + (this.currentPage - 1);
@@ -214,6 +206,10 @@ export class NoticeTerminationComponent implements OnInit {
     } else {
       return  `with: ${reason}`;
     }
+  }
+
+  public fGFilterCompanyField(field:string):any{
+    return this.fGFilterCompany.get(field);
   }
   
 }

@@ -1,0 +1,197 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+  <div class="row">
+    <div class="col-md-7">
+      <div class="card">
+        <div class="card-header">
+            <p class="category">{{ title }}</p>
+        </div>
+        <div class="card-body">
+            <div *ngIf="status === 2">
+                <div class="alert alert-danger">
+                  <button type="button" aria-hidden="true" class="close">
+                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                  </button>
+                  <span>{{ message }}</span>
+                </div>
+              </div>
+              <div *ngIf="status === 0">
+                <div class="alert alert-success">
+                  <button type="button" aria-hidden="true" class="close">
+                    <i class="now-ui-icons ui-1_simple-remove"></i>
+                  </button>
+                  <span>{{ message }}</span>
+                </div>
+              </div>
+            <form [formGroup]="fGSchoolCalendar" novalidate="" class="ng-untouched ng-pristine ng-valid">
+                <div class="row left-pad35">
+                    <div class="col-md-8 px-1">
+                        <div class="form-group">
+                            <label>Calendario Escolar</label>
+                            <input class="form-control" placeholder="Número do atestado" type="text" value="" formControlName="name">
+                        </div>
+                    </div>
+                </div>
+                <div class="row left-pad35">
+                    <div class="col-md-8 px-1">
+                        <div class="form-group">
+                            <label>Ano Letivo</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row left-pad25">
+                    <div class="col-md-2 pr-1">
+                        <div class="form-group">
+                            <label class="mr-sm-2">Ano referência</label>
+                            <input type="number" id="yearReference" name="yearReference" class="form-control" formControlName="yearReference">
+                        </div>
+                    </div>
+                    <div class="col-md-3 pr-1">
+                        <div class="form-group">
+                            <label class="mr-sm-2">Data início</label>
+                            <input type="date" id="startDateSchoolYear" name="startDateSchoolYear" class="form-control" formControlName="startDateSchoolYear">
+                        </div>
+                    </div>
+                    <div class="col-md-3 pr-1">
+                        <div class="form-group">
+                            <label class="mr-sm-2">Data fim</label>
+                            <input type="date" id="endDateSchoolYear" name="endDateSchoolYear" class="form-control" formControlName="endDateSchoolYear">
+                        </div>
+                    </div>
+                </div>
+                <div class="row left-pad35">
+                    <div class="col-md-8 px-1">
+                        <div class="form-group">
+                            <label>Primeiro Semestre Letivo</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row left-pad25">
+                    <div class="col-md-3 pr-1">
+                        <div class="form-group">
+                            <label class="mr-sm-2">Data início</label>
+                            <input type="date" id="startDateFirstHalf" name="startDateFirstHalf" class="form-control" formControlName="startDateFirstHalf">
+                        </div>
+                    </div>
+                    <div class="col-md-3 pr-1">
+                        <div class="form-group">
+                            <label class="mr-sm-2">Data do fim</label>
+                            <input type="date" id="endDateFirstHalf" name="endDateFirstHalf" class="form-control" formControlName="endDateFirstHalf">
+                        </div>
+                    </div>
+                    <div class="col-md-3 pr-1">
+                        <div class="form-group">
+                            <label class="mr-sm-2">Data de início de férias</label>
+                            <input type="date" id="startDateFirstHalfVacation" name="startDateFirstHalfVacation" class="form-control" formControlName="startDateFirstHalfVacation">
+                        </div>
+                    </div>
+                    <div class="col-md-3 pr-1">
+                        <div class="form-group">
+                            <label class="mr-sm-2">Data do término das férias</label>
+                            <input type="date" id="endDateFirstHalfVacation" name="endDateFirstHalfVacation" class="form-control" formControlName="endDateFirstHalfVacation">
+                        </div>
+                    </div>
+                </div>
+                <div class="row left-pad35">
+                    <div class="col-md-8 px-1">
+                        <div class="form-group">
+                            <label>Segundo Semestre Letivo</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row left-pad25">
+                    <div class="col-md-3 pr-1">
+                        <div class="form-group">
+                            <label class="mr-sm-2">Data início</label>
+                            <input type="date" id="startDateSecondHalf" name="startDateSecondHalf" class="form-control" formControlName="startDateSecondHalf">
+                        </div>
+                    </div>
+                    <div class="col-md-3 pr-1">
+                        <div class="form-group">
+                            <label class="mr-sm-2">Data do fim</label>
+                            <input type="date" id="endDateSecondHalf" name="endDateSecondHalf" class="form-control" formControlName="endDateSecondHalf">
+                        </div>
+                    </div>
+                    <div class="col-md-3 pr-1">
+                        <div class="form-group">
+                            <label class="mr-sm-2">Data de início de férias</label>
+                            <input type="date" id="startDateSecondHalfVacation" name="startDateSecondHalfVacation" class="form-control" formControlName="startDateSecondHalfVacation">
+                        </div>
+                    </div>
+                    <div class="col-md-3 pr-1">
+                        <div class="form-group">
+                            <label class="mr-sm-2">Data do término das férias</label>
+                            <input type="date" id="endDateSecondHalfVacation" name="endDateSecondHalfVacation" class="form-control" formControlName="endDateSecondHalfVacation">
+                        </div>
+                    </div>
+                </div>                
+                <div class="row left-pad35">
+                    <div class="col-md-8 px-1">
+                        <div class="form-group">
+                            <label>Primeiro Semestre Recesso</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row left-pad25">
+                    <div class="col-md-3 pr-1">
+                        <div class="form-group">
+                            <label class="mr-sm-2">Data início</label>
+                            <input type="date" id="startDateFirstHalfRecess" name="startDateFirstHalfRecess" class="form-control" formControlName="startDateFirstHalfRecess">
+                        </div>
+                    </div>
+                    <div class="col-md-3 pr-1">
+                        <div class="form-group">
+                            <label class="mr-sm-2">Data do término</label>
+                            <input type="date" id="endDateFirstHalfRecess" name="endDateFirstHalfRecess" class="form-control" formControlName="endDateFirstHalfRecess">
+                        </div>
+                    </div>
+                </div>                    
+                <div class="row left-pad35">
+                    <div class="col-md-8 px-1">
+                        <div class="form-group">
+                            <label>Segundo Semestre Recesso</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row left-pad25">
+                    <div class="col-md-3 pr-1">
+                        <div class="form-group">
+                            <label class="mr-sm-2">Data início</label>
+                            <input type="date" id="startDateSecondHalfRecess" name="startDateSecondHalfRecess" class="form-control" formControlName="startDateSecondHalfRecess">
+                        </div>
+                    </div>
+                    <div class="col-md-3 pr-1">
+                        <div class="form-group">
+                            <label class="mr-sm-2">Data do término</label>
+                            <input type="date" id="endDateSecondHalfRecess" name="endDateSecondHalfRecess" class="form-control" formControlName="endDateSecondHalfRecess">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-auto my-1">
+                      <button type="submit" class="btn btn-primary" (click)="deleteMessage(actionSchoolCalendar)">Excluir</button> 
+                      <button type="submit" class="btn btn-primary" (click)="saveMessage(actionSchoolCalendar)">{{ actiomModal }}</button> 
+                    </div>
+                </div>     
+            </form>
+        </div>
+        <ng-template #actionSchoolCalendar let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title">{{ titleModal }}</h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              {{ messageModal }}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancelar</button>
+              <button *ngIf="actiomModal === 'Salvar' || actiomModal === 'Atualizar'" type="submit" class="btn btn-outline-dark" (click)="save()">{{ actiomModal }}</button>
+              <button *ngIf="actiomModal === 'Excluir'" type="submit" class="btn btn-outline-dark" (click)="delete()">{{ actiomModal }}</button> 
+            </div>
+          </ng-template>
+    </div>
+  </div>
+</div>

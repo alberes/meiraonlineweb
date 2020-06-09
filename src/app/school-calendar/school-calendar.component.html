@@ -9,12 +9,11 @@
         </div>
         <div class="card-body">
           <form [formGroup]="fGFilterCompany" (submit)="filterCompany()">
-            <div *ngIf="(fGFilterCompanyField('companyId').invalid && fGFilterCompanyField('companyId').dirty) || (fGFilterCompanyField('exported').invalid && exported.dirty)">
+            <div *ngIf="fGFilterCompanyField('exported').invalid && fGFilterCompanyField('exported').dirty">
               <div class="alert alert-danger">
                 <button type="button" aria-hidden="true" class="close">
                   <i class="now-ui-icons ui-1_simple-remove"></i>
                 </button>
-                <span *ngIf="fGFilterCompanyField('companyId').invalid">Selecione uma empresa.</span>
                 <span *ngIf="fGFilterCompanyField('exported').invalid">Selecione um filtro exportados Sim ou Não.</span>
               </div>
             </div>
@@ -36,43 +35,42 @@
             </div>
             <div class="form-row align-items-center">
               <div class="col-auto my-1">
-                <label class="mr-sm-2" for="inlineFormCustomSelect">Empresa</label>
-                <select class="custom-select mr-sm-2" id="companyId" formControlName="companyId">
-                  <option [selected]="" disabled [ngValue]="null">Selecione uma empresa</option>
-                  <option *ngFor="let item of companies" value="{{ item.id }}">{{ item.name }}</option>
-                </select>                
-              </div>
-              <div class="col-auto my-1">
                 <label class="mr-sm-2" for="inlineFormCustomSelect">Exportados</label>
                 <select class="custom-select mr-sm-2" id="exported" formControlName="exported">
                   <option [selected]="" disabled [ngValue]="null">Exportados</option>
-                    <option value="S">Sim</option>
-                    <option value="N">não</option>
+                  <option value="S">Sim</option>
+                  <option value="N">não</option>
                 </select>
               </div>
               <div class="col-auto my-1">
-                <button type="submit" class="btn btn-primary" [disabled]="fGFilterCompanyField('companyId').invalid || fGFilterCompanyField('exported').invalid">Filtrar</button>
+                <button type="submit" class="btn btn-primary" [disabled]="fGFilterCompanyField('exported').invalid">Filtrar</button>
               </div>   
             </div>
           </form>
           <div class="table-responsive">
-            <table class="table">
+            <table class="table table-school">
               <thead class=" text-primary">
-                  <th class="col-sm-12">
-                    Nome
+                <th class="th-sm-1 column-id">
+                    Ano referência
                   </th>
-                  <th class="col-sm-1">
+                  <th class="th-sm-4 column-name">
+                    Calendario Escolar
+                  </th>                  
+                  <th class="th-sm-1">
                     Exportar
                   </th>
                 </thead>
                 <tbody class="employee">
-                <tr *ngFor="let item of employees; let even = even; let odd = odd">
+                <tr *ngFor="let item of schoolCalendars; let even = even; let odd = odd">
                   <td>
-                    <a [routerLink]="['/sick-leave-save', item.id]">{{ item.name }}</a>
+                    {{ item.yearReference }}
                   </td>
                   <td>
+                    <a [routerLink]="['/school-calendar-save', item.id]">{{ item.name }}</a>
+                  </td>                  
+                  <td>
                     <div class="col-auto my-1">
-                      <a *ngIf="allowExport" class="btn btn-primary" (click)="exportMessage(item.id, item.name, actionEmployee)">Exportar</a>
+                      <a *ngIf="allowExport" class="btn btn-primary" (click)="exportMessage(item.id, item.name, actionSchoolCalendar)">Exportar</a>
                       <button *ngIf="!allowExport" class="btn" [disabled]="!allowExport">Exportar</button>
                     </div>
                   </td>
@@ -95,7 +93,7 @@
               <span class="mat-button-wrapper">Página {{ currentPage }} de {{ totalPages }}</span>
               <div matripple="" class="mat-ripple mat-button-ripple"></div>
               <div class="mat-button-focus-overlay"></div>
-           </button>  
+           </button>   
             <button (click)="forward()" mat-raised-button="" type="button" class="btn btn-round btn-info mat-raised-button mat-button-base">
                <span class="mat-button-wrapper">&gt;</span>
                <div matripple="" class="mat-ripple mat-button-ripple"></div>
@@ -105,10 +103,10 @@
                <span class="mat-button-wrapper">&gt;&gt;</span>
                <div matripple="" class="mat-ripple mat-button-ripple"></div>
                <div class="mat-button-focus-overlay"></div>
-            </button>            
+            </button>                         
          </div>
         </div>
-        <ng-template #actionEmployee let-modal>
+        <ng-template #actionSchoolCalendar let-modal>
           <div class="modal-header">
             <h4 class="modal-title" id="modal-basic-title">{{ titleModal }}</h4>
             <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">

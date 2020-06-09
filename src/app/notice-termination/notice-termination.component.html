@@ -9,13 +9,13 @@
         </div>
         <div class="card-body">
           <form [formGroup]="fGFilterCompany" (submit)="filterCompany()">
-            <div *ngIf="(companyId.invalid && companyId.dirty) || (exported.invalid && exported.dirty)">
+            <div *ngIf="(fGFilterCompanyField('companyId').invalid && fGFilterCompanyField('companyId').dirty) || (fGFilterCompanyField('exported').invalid && fGFilterCompanyField('exported').dirty)">
               <div class="alert alert-danger">
                 <button type="button" aria-hidden="true" class="close">
                   <i class="now-ui-icons ui-1_simple-remove"></i>
                 </button>
-                <span *ngIf="companyId.invalid">Selecione uma empresa.</span>
-                <span *ngIf="exported.invalid">Selecione um filtro exportados Sim ou Não.</span>
+                <span *ngIf="fGFilterCompanyField('companyId').invalid">Selecione uma empresa.</span>
+                <span *ngIf="fGFilterCompanyField('exported').invalid">Selecione um filtro exportados Sim ou Não.</span>
               </div>
             </div>
             <div *ngIf="status === 1">
@@ -51,7 +51,7 @@
                 </select>
               </div>
               <div class="col-auto my-1">
-                <button type="submit" class="btn btn-primary" [disabled]="companyId.invalid || exported.invalid">Filtrar</button>
+                <button type="submit" class="btn btn-primary" [disabled]="fGFilterCompanyField('companyId').invalid || fGFilterCompanyField('exported').invalid">Filtrar</button>
               </div>   
             </div>
           </form>

@@ -7,13 +7,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NoticeTerminationSaveComponent } from '../../notice-termination-save/notice-termination-save.component';
 import { SickLeaveComponent } from '../../sick-leave/sick-leave.component';
 import { SickLeaveSaveComponent } from '../../sick-leave-save/sick-leave-save.component';
+import { SchoolCalendarComponent } from '../../school-calendar/school-calendar.component';
+import { SchoolCalendarSaveComponent } from 'src/app/school-calendar-save/school-calendar-save.component';
 
 @NgModule({
   declarations: [
     NoticeTerminationComponent,
     NoticeTerminationSaveComponent,
     SickLeaveComponent,
-    SickLeaveSaveComponent
+    SickLeaveSaveComponent,
+    SchoolCalendarComponent,
+    SchoolCalendarSaveComponent
   ],
   imports: [
     CommonModule,

@@ -3,12 +3,10 @@ import { DomainDTO } from '../models/domain.dto';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal, NgbModalOptions, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { APIDomainService } from '../services/apidomain.service';
 import { APISickLeaveService } from '../services/apisick-leave.service';
 import { APIEmployeeService } from '../services/apiemployee.service';
 import { Employee } from '../models/employee.dto';
 import { SickLeaveDTO } from '../models/sickleave.dto';
-import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-sick-leave-save',
@@ -38,14 +36,14 @@ export class SickLeaveSaveComponent implements OnInit {
   public totalPages:number = 0;
   public currentPage:number = 0;
   
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private formBuilder:FormBuilder, private modalService: NgbModal, 
-    private apiDomainService:APIDomainService, private apiSickLeaveService:APISickLeaveService, private apiEmployeeService:APIEmployeeService) {
+  constructor(private router:Router, private activatedRoute:ActivatedRoute, private formBuilder:FormBuilder, private modalService:NgbModal, 
+    private apiSickLeaveService:APISickLeaveService, private apiEmployeeService:APIEmployeeService) {
       this.fGSickLeave = this.formBuilder.group({
         employeeId: new FormControl({value: null, disabled: true}, Validators.required),
         sickNumber: new FormControl(null, Validators.required),
         reasonSickLeave: new FormControl(null, Validators.required),
         startDate: new FormControl(null, Validators.required),
-        quantity: new FormControl(null, Validators.required),
+        quantity: new FormControl(0, Validators.required),
         endDate: new FormControl(null, Validators.required),
         noticeStatus: new FormControl(null, Validators.required),
         trafficAccidentType: new FormControl(null, Validators.required),
@@ -107,8 +105,8 @@ export class SickLeaveSaveComponent implements OnInit {
       sickNumber: [this.sickLeaveDTO.sickNumber, [Validators.required]],
       reasonSickLeave: [this.sickLeaveDTO.reasonSickLeave, [Validators.required]],
       startDate: [this.sickLeaveDTO.startDate, [Validators.required]],
-      quantity: [this.sickLeaveDTO, [Validators.required]],
-      endDate: [this.sickLeaveDTO.quantity, [Validators.required]],
+      quantity: [this.sickLeaveDTO.quantity, [Validators.required]],
+      endDate: [this.sickLeaveDTO.endDate, [Validators.required]],
       noticeStatus: [this.sickLeaveDTO.noticeStatus, [Validators.required]],
       trafficAccidentType: [this.sickLeaveDTO.trafficAccidentType, [Validators.required]],
       detailSickLeave : [this.sickLeaveDTO.detailSickLeave, [Validators.required]],
@@ -188,6 +186,7 @@ export class SickLeaveSaveComponent implements OnInit {
           this.getSickLeaves();
         },
           error => {
+            this.error = error;
             this.status = 2;
             this.message = 'Erro ao tentar atualizar o Afastamento Temporário';
             console.log(error);

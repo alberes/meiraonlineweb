@@ -8,6 +8,8 @@ import { AdminLayoutModule } from './layouts/admin-layout/admin-layout.module';
 import { NoticeTerminationSaveComponent } from './notice-termination-save/notice-termination-save.component';
 import { SickLeaveComponent } from './sick-leave/sick-leave.component';
 import { SickLeaveSaveComponent } from './sick-leave-save/sick-leave-save.component';
+import { SchoolCalendarComponent } from './school-calendar/school-calendar.component';
+import { SchoolCalendarSaveComponent } from './school-calendar-save/school-calendar-save.component';
 
 
 const routes: Routes = [
@@ -30,6 +32,14 @@ const routes: Routes = [
       {
         path: 'sick-leave-save/:employeeId',
         component: SickLeaveSaveComponent
+      },
+      {
+        path: 'school-calendar',
+        component: SchoolCalendarComponent
+      },
+      {
+        path: 'school-calendar-save/:id',
+        component: SchoolCalendarSaveComponent
       }
     ]}
 ];

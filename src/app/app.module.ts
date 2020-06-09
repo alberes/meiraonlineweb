@@ -8,11 +8,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { APIDomainService } from './services/apidomain.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { APINoticeTerminationService } from './services/apinotice-termination.service';
 import { HttpErrorMeiraInterceptor } from './services/exception/http-error.interceptor';
-import { SickLeaveSaveComponent } from './sick-leave-save/sick-leave-save.component';
 
 @NgModule({
   declarations: [
@@ -31,8 +28,6 @@ import { SickLeaveSaveComponent } from './sick-leave-save/sick-leave-save.compon
   ],
   providers: [
     HttpClient,
-    APIDomainService,
-    APINoticeTerminationService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpErrorMeiraInterceptor,
