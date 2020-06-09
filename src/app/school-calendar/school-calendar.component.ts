@@ -123,7 +123,7 @@ export class SchoolCalendarComponent implements OnInit {
 
   public exportMessage(id:string, name:string, content):void{
     this.schoolCalendarDTO.id = id;
-    this.apiSchoolCalendarService.getSchoolCalendar(`schoolCalendars/${this.schoolCalendarDTO.id}.`).
+    this.apiSchoolCalendarService.getSchoolCalendar(`schoolCalendars/${this.schoolCalendarDTO.id}`).
       subscribe((sickleaves:any) => {
         let total:number = Number(sickleaves['totalElements']);
         if(total === 0){
@@ -131,7 +131,7 @@ export class SchoolCalendarComponent implements OnInit {
           this.actiomModal = 'alert';
         }else{
           this.titleModal = 'Alerta';
-          this.messageModal = `Deseja exportar o ${this.title} o ${this.schoolCalendarDTO.id}.?`;
+          this.messageModal = `Deseja exportar o ${this.title} o ${this.schoolCalendarDTO.id}?`;
           this.actiomModal = 'Exportar';
         }
       }
