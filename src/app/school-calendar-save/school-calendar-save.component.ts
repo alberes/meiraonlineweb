@@ -130,10 +130,11 @@ export class SchoolCalendarSaveComponent implements OnInit {
       this.status = 1;
     }else{
       this.titleModal = 'Alerta';
-      if(this.actiomModal === 'Atualizar'){
-        this.messageModal = `Deseja atualizar ${this.schoolCalendarDTO.id} - ${this.schoolCalendarDTO.name}?`;
-      }else{
+      if(this.schoolCalendarDTO.id  === '0'){
         this.messageModal = `Deseja salvar ${this.title}?`;
+        this.actiomModal = 'Salvar';
+      }else{
+        this.messageModal = `Deseja atualizar ${this.schoolCalendarDTO.id} - ${this.schoolCalendarDTO.name}?`;
         this.actiomModal = 'Atualizar';
       }
       this.openAlert(content);
@@ -142,8 +143,23 @@ export class SchoolCalendarSaveComponent implements OnInit {
   
   public save():void{
     if(this.modalService.hasOpenModals){
-      this.modalService.dismissAll(); 
-      if(this.actiomModal === 'Atualizar'){
+      this.modalService.dismissAll();
+      this.toSchoolCalendar();
+      if(this.schoolCalendarDTO.id === '0'){
+        this.apiSchoolCalendarService.save(`schoolCalendars`, this.schoolCalendarDTO).
+          subscribe((response) => {
+            this.status = 0;
+            this.actiomModal = 'Atualizar';
+            this.schoolCalendarDTO.id = this.getId(response.headers.get('location'));
+            this.message = `${this.title} criado ${this.schoolCalendarDTO.id} - ${this.schoolCalendarDTO.name} com sucesso.`;
+          },
+          error => {
+            this.status = 2;
+            this.message = `Erro ao tentar criar o ${this.title} - ${this.schoolCalendarDTO.name}`;
+            this.error = error;
+          }
+        );
+      }else{
         this.toSchoolCalendar();
         this.apiSchoolCalendarService.update(`schoolCalendars/${this.schoolCalendarDTO.id}`, this.schoolCalendarDTO).
           subscribe((response) => {
@@ -154,24 +170,9 @@ export class SchoolCalendarSaveComponent implements OnInit {
           error =>{
             this.error = error;
             this.status = 2;
-            this.message = `Erro ao tentar atualizar o ${this.title}`;
+            this.message = `Erro ao tentar atualizar o ${this.title} - ${this.schoolCalendarDTO.name}`;
             console.log(this.error);
-          });
-      }else{
-        this.apiSchoolCalendarService.save(`schoolCalendars`, this.schoolCalendarDTO).
-          subscribe((response) => {
-            this.status = 0;
-            this.actiomModal = 'Atualizar';
-            this.schoolCalendarDTO.id = this.getId(response.headers.get('location'));
-            this.message = `${this.title} criado ${this.schoolCalendarDTO.id} - ${this.schoolCalendarDTO.name} com sucesso.`;
-          },
-          error => {
-            this.status = 2;
-            this.message = `Erro ao tentar criar o ${this.title}`;
-            this.error = error;
-          }
-          );
-        
+          });        
       }
     }    
   }
