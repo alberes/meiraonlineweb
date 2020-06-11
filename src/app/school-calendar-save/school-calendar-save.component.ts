@@ -29,35 +29,16 @@ export class SchoolCalendarSaveComponent implements OnInit {
 
   private error:any;
 
-  constructor(private activatedRoute: ActivatedRoute, private apiSchoolCalendarService:APISchoolCalendarService, private formBuilder:FormBuilder,
+  constructor(private activatedRoute:ActivatedRoute, private apiSchoolCalendarService:APISchoolCalendarService, private formBuilder:FormBuilder,
     private modalService:NgbModal) {
-    /*this.fGSchoolCalendar = this.formBuilder.group({
-      name: new FormControl(null, Validators.required),
-      yearReference: new FormControl(null, Validators.required),
-      startDateSchoolYear: new FormControl(null, Validators.required),
-      endDateSchoolYear: new FormControl(null, Validators.required),
-      startDateFirstHalf: new FormControl(null, Validators.required),
-      endDateFirstHalf: new FormControl(null, Validators.required),
-      startDateFirstHalfVacation: new FormControl(null, Validators.required),
-      endDateFirstHalfVacation: new FormControl(null, Validators.required),
-      startDateSecondHalf: new FormControl(null, Validators.required),
-      endDateSecondHalf: new FormControl(null, Validators.required),
-      startDateSecondHalfVacation: new FormControl(null, Validators.required),
-      endDateSecondHalfVacation: new FormControl(null, Validators.required),
-      startDateFirstHalfRecess: new FormControl(null, Validators.required),
-      endDateFirstHalfRecess: new FormControl(null, Validators.required),
-      startDateSecondHalfRecess: new FormControl(null, Validators.required),
-      endDateSecondHalfRecess: new FormControl(null, Validators.required)
-    });*/
   }
 
   ngOnInit(): void {
     this.actiomModal = 'Salvar';
-    this.schoolCalendarDTO = new SchoolCalendarDTO();
-    this.tofGSchoolCalendar();
     this.activatedRoute.paramMap.subscribe(params => {
       this.schoolCalendarDTO = new SchoolCalendarDTO();
       this.schoolCalendarDTO.id = params.get('id');
+      this.tofGSchoolCalendar();
     });
     if(this.schoolCalendarDTO.id === "0"){
       this.actiomModal = 'Salvar';

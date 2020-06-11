@@ -8,8 +8,9 @@ import { NoticeTerminationSaveComponent } from '../../notice-termination-save/no
 import { SickLeaveComponent } from '../../sick-leave/sick-leave.component';
 import { SickLeaveSaveComponent } from '../../sick-leave-save/sick-leave-save.component';
 import { SchoolCalendarComponent } from '../../school-calendar/school-calendar.component';
-import { SchoolCalendarSaveComponent } from 'src/app/school-calendar-save/school-calendar-save.component';
-import { PreliminaryRegistrationComponent } from 'src/app/preliminary-registration/preliminary-registration.component';
+import { SchoolCalendarSaveComponent } from '../../school-calendar-save/school-calendar-save.component';
+import { PreliminaryRegistrationComponent } from '../../preliminary-registration/preliminary-registration.component';
+import { PreliminaryRegistrationSaveComponent } from '../../preliminary-registration-save/preliminary-registration-save.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { PreliminaryRegistrationComponent } from 'src/app/preliminary-registrati
     SickLeaveSaveComponent,
     SchoolCalendarComponent,
     SchoolCalendarSaveComponent,
-    PreliminaryRegistrationComponent
+    PreliminaryRegistrationComponent,
+    PreliminaryRegistrationSaveComponent
   ],
   imports: [
     CommonModule,

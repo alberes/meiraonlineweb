@@ -11,6 +11,7 @@ import { SickLeaveSaveComponent } from './sick-leave-save/sick-leave-save.compon
 import { SchoolCalendarComponent } from './school-calendar/school-calendar.component';
 import { SchoolCalendarSaveComponent } from './school-calendar-save/school-calendar-save.component';
 import { PreliminaryRegistrationComponent } from './preliminary-registration/preliminary-registration.component';
+import { PreliminaryRegistrationSaveComponent } from './preliminary-registration-save/preliminary-registration-save.component';
 
 
 const routes: Routes = [
@@ -45,6 +46,10 @@ const routes: Routes = [
       {
         path: 'preliminary-registration',
         component: PreliminaryRegistrationComponent
+      },
+      {
+        path: 'preliminary-registration-save/:id',
+        component: PreliminaryRegistrationSaveComponent
       }
     ]}
 ];
