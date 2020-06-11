@@ -10,6 +10,7 @@ import { SickLeaveComponent } from './sick-leave/sick-leave.component';
 import { SickLeaveSaveComponent } from './sick-leave-save/sick-leave-save.component';
 import { SchoolCalendarComponent } from './school-calendar/school-calendar.component';
 import { SchoolCalendarSaveComponent } from './school-calendar-save/school-calendar-save.component';
+import { PreliminaryRegistrationComponent } from './preliminary-registration/preliminary-registration.component';
 
 
 const routes: Routes = [
@@ -40,6 +41,10 @@ const routes: Routes = [
       {
         path: 'school-calendar-save/:id',
         component: SchoolCalendarSaveComponent
+      },
+      {
+        path: 'preliminary-registration',
+        component: PreliminaryRegistrationComponent
       }
     ]}
 ];
