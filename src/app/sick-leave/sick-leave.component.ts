@@ -15,6 +15,8 @@ import { MessageDTO } from '../models/message.dto';
 export class SickLeaveComponent implements OnInit {
 
   public title:string = 'Afastamento Temporário';
+  private resource:string = 'sickleaves';
+
   public companies: DomainDTO[];
   public employees: DomainDTO[];
   
@@ -81,7 +83,7 @@ export class SickLeaveComponent implements OnInit {
 
   public exportMessage(id:string, name:string, content):void{
     this.employeeId = id;
-    this.apiSickLeaveService.getSickLeave(`sickleaves/employee/${this.employeeId}`).
+    this.apiSickLeaveService.getSickLeave(`${this.resource}/employee/${this.employeeId}`).
       subscribe((sickleaves:any) => {
         let total:number = Number(sickleaves['totalElements']);
         if(total === 0){
@@ -141,20 +143,20 @@ export class SickLeaveComponent implements OnInit {
   public export():void{
     if(this.modalService.hasOpenModals){
       this.modalService.dismissAll();
-      this.apiSickLeaveService.export(`sickleaves/export/${this.employeeId}`).
+      this.apiSickLeaveService.export(`${this.resource}/export/${this.employeeId}`).
       subscribe((response:MessageDTO) => {
         this.status = 0;
         if(response.status === 'OK'){
-          this.message = 'Afastamento Temporário exportado com sucesso.';
+          this.message = `${this.title} exportado com sucesso.`;
         }else{
           this.status = 1;
-          this.message = 'Não foi encontrado Afastamento Temporário.';
+          this.message = 'Não foi encontrado ${this.title}.';
         }
           this.getEmployees();
         },
         error => {
           this.status = 1;
-          this.message = 'Erro ao tentar exportar o Afastamento Temporário';
+          this.message = `Erro ao tentar exportar o ${this.title}.`;
           console.log(error);
         }
       )

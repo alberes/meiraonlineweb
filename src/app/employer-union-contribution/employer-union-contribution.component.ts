@@ -1,27 +1,27 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { NgbModalOptions, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { RouterOutlet } from '@angular/router';
-import { APIDomainService } from '../services/apidomain.service';
 import { DomainDTO } from '../models/domain.dto';
-import { APIPreliminaryRegistrationService } from '../services/apipreliminary-registration.service';
-import { PreliminaryRegistrationDTO } from '../models/preliminaryregistration.dto';
+import { EmployerUnionContributionDTO } from '../models/employerunioncontribution.dto';
 import { MessageDTO } from '../models/message.dto';
+import { RouterOutlet } from '@angular/router';
+import { NgbModalOptions, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { APIDomainService } from '../services/apidomain.service';
+import { APIEmployerUnionContributionService } from '../services/apiemployer-union-contribution.service';
 
 @Component({
-  selector: 'app-preliminary-registration',
-  templateUrl: './preliminary-registration.component.html',
-  styleUrls: ['./preliminary-registration.component.css']
+  selector: 'app-employer-union-contribution',
+  templateUrl: './employer-union-contribution.component.html',
+  styleUrls: ['./employer-union-contribution.component.css']
 })
-export class PreliminaryRegistrationComponent implements OnInit {
+export class EmployerUnionContributionComponent implements OnInit {
 
-  public title:string = 'Ficha de Cadastro Preliminar';
-  private resource:string = 'preliminaryregistrations';
-  
+  public title:string = 'Contribuição Sindical Patronal';
+  private resource:string = 'employersunioncontribution';
+
   public fGFilterCompany:FormGroup;
   public companies: DomainDTO[];
-  public employees: DomainDTO[];
-  private preliminaryRegistrationDTO:PreliminaryRegistrationDTO;
+  public employersUnionContribution: DomainDTO[];
+  private employerUnionContributionDTO:EmployerUnionContributionDTO;
 
   @ViewChild(RouterOutlet) outlet: RouterOutlet;
   modalOptions:NgbModalOptions;
@@ -39,18 +39,18 @@ export class PreliminaryRegistrationComponent implements OnInit {
   public message:string = '';
 
   private error:any;
-  
+
   constructor(private formBuilder:FormBuilder, private modalService: NgbModal, private apiDomainService:APIDomainService,
-    private apiPreliminaryRegistrationService:APIPreliminaryRegistrationService) {
-    this.fGFilterCompany = this.formBuilder.
+    private apiEmployerUnionContributionService:APIEmployerUnionContributionService) {
+      this.fGFilterCompany = this.formBuilder.
       group({
         companyId: new FormControl(null, Validators.required),
         exported: new FormControl(null, Validators.required)
-    });
-  }
+      });
+    }
 
   ngOnInit(): void {
-    this.preliminaryRegistrationDTO = new PreliminaryRegistrationDTO();
+    this.employerUnionContributionDTO = new EmployerUnionContributionDTO();
     this.apiDomainService.getDomains('companies').
       subscribe((domains:DomainDTO[]) => {
         this.companies = domains;
@@ -67,14 +67,14 @@ export class PreliminaryRegistrationComponent implements OnInit {
     if(this.fGFilterCompany.value['exported'] === 'N'){
       this.allowExport = true;
     }
-    this.getEmployees();
+    this.getEmployersUnionContribution();
   }
 
-  private getEmployees():void{
-    let resource:string = `employees/company/${this.fGFilterCompany.value['companyId']}?exported=${this.fGFilterCompany.value['exported']}&page=${(this.currentPage - 1)}`;
-    this.apiDomainService.getDomains(resource).
-      subscribe((domains:DomainDTO[]) => {
-        this.employees = domains['content'];
+  private getEmployersUnionContribution():void{
+    let resourceList:string = `${this.resource}/company/${this.fGFilterCompany.value['companyId']}?exported=${this.fGFilterCompany.value['exported']}&page=${(this.currentPage - 1)}`;
+    this.apiEmployerUnionContributionService.getEmployersUnionContributionDTO(resourceList).
+      subscribe((domains:EmployerUnionContributionDTO[]) => {
+        this.employersUnionContribution = domains['content'];
         this.totalPages = domains['totalPages'];
       },
       (error:any) => {
@@ -86,42 +86,42 @@ export class PreliminaryRegistrationComponent implements OnInit {
 
   public first():void{
     this.currentPage = 1;
-    this.getEmployees();
+    this.getEmployersUnionContribution();
   }
 
   public rewind():void{
     if(this.currentPage > 1){
       this.currentPage--;
-      this.getEmployees();
+      this.getEmployersUnionContribution();
     }
   }
 
   public forward():void{
     if(this.currentPage < this.totalPages){
       this.currentPage++;
-      this.getEmployees();
+      this.getEmployersUnionContribution();
     }
   }
 
   public last():void{
     if(this.currentPage < this.totalPages){
       this.currentPage = this.totalPages;
-      this.getEmployees();
+      this.getEmployersUnionContribution();
     }
   }
 
   public deleteMessage(id:string, name:string, content):void{
-    this.preliminaryRegistrationDTO.id = id;
-    this.apiPreliminaryRegistrationService.getPreliminaryRegistration(`${this.resource}/${this.preliminaryRegistrationDTO.id}`).
-      subscribe((preliminaryRegistration:PreliminaryRegistrationDTO) => {
-        if(preliminaryRegistration === null){
+    this.employerUnionContributionDTO.id = id;
+    this.apiEmployerUnionContributionService.getEmployerUnionContribution(`${this.resource}/${this.employerUnionContributionDTO.id}`).
+      subscribe((employerUnionContribution:EmployerUnionContributionDTO) => {
+        if(employerUnionContribution === null){
           this.titleModal = 'Alerta';
-          this.messageModal = `Não existe o ${this.title} para o colaborador ${this.preliminaryRegistrationDTO.id} - ${name}`;
+          this.messageModal = `Não existe o ${this.title} ${this.employerUnionContributionDTO.id} - ${name}`;
           this.actiomModal = 'alert';
         }else{
-          this.preliminaryRegistrationDTO = preliminaryRegistration;
+          this.employerUnionContributionDTO = employerUnionContribution;
           this.titleModal = 'Alerta';
-          this.messageModal = `Deseja exluir o ${this.title} do colaborador ${this.preliminaryRegistrationDTO.id} - ${this.preliminaryRegistrationDTO.name}?`;
+          this.messageModal = `Deseja exluir o ${this.title} ${this.employerUnionContributionDTO.id} - ${this.employerUnionContributionDTO.name}?`;
           this.actiomModal = 'Excluir';
         }
       }
@@ -132,7 +132,7 @@ export class PreliminaryRegistrationComponent implements OnInit {
   public delete():void{
     if(this.modalService.hasOpenModals){
       this.modalService.dismissAll();
-      this.apiPreliminaryRegistrationService.delete(`${this.resource}/${this.preliminaryRegistrationDTO.id}`).
+      this.apiEmployerUnionContributionService.delete(`${this.resource}/${this.employerUnionContributionDTO.id}`).
         subscribe((response) => {
           this.status = 0;
           this.message = `${this.title} excluído com sucesso.`;
@@ -147,17 +147,17 @@ export class PreliminaryRegistrationComponent implements OnInit {
   }
 
   public exportMessage(id:string, name:string, content):void{
-    this.preliminaryRegistrationDTO.id = id;
-    this.apiPreliminaryRegistrationService.getPreliminaryRegistration(`${this.resource}/${this.preliminaryRegistrationDTO.id}`).
-      subscribe((preliminaryRegistration:PreliminaryRegistrationDTO) => {
-        if(preliminaryRegistration === null){
+    this.employerUnionContributionDTO.id = id;
+    this.apiEmployerUnionContributionService.getEmployerUnionContribution(`${this.resource}/${this.employerUnionContributionDTO.id}`).
+      subscribe((employerUnionContribution:EmployerUnionContributionDTO) => {
+        if(employerUnionContribution === null){
           this.titleModal = 'Alerta';
-          this.messageModal = `Não existe o ${this.title} para o colaborador ${this.preliminaryRegistrationDTO.id} - ${name}.`;
+          this.messageModal = `Não existe o ${this.title} ${this.employerUnionContributionDTO.id} - ${name}.`;
           this.actiomModal = 'Alert';
         }else{
-          this.preliminaryRegistrationDTO = preliminaryRegistration;
+          this.employerUnionContributionDTO = employerUnionContribution;
           this.titleModal = 'Alerta';
-          this.messageModal = `Deseja exportar o ${this.title} do colaborador ${this.preliminaryRegistrationDTO.id} - ${this.preliminaryRegistrationDTO.name}?`;
+          this.messageModal = `Deseja exportar o ${this.title} ${this.employerUnionContributionDTO.id} - ${this.employerUnionContributionDTO.name}?`;
           this.actiomModal = 'Exportar';
         }
       }
@@ -168,7 +168,7 @@ export class PreliminaryRegistrationComponent implements OnInit {
   public export():void{
     if(this.modalService.hasOpenModals){
       this.modalService.dismissAll();
-      this.apiPreliminaryRegistrationService.export(`${this.resource}/export/${this.preliminaryRegistrationDTO.id}`).
+      this.apiEmployerUnionContributionService.export(`${this.resource}/export/${this.employerUnionContributionDTO.id}`).
       subscribe((response:MessageDTO) => {
           if(response.status === 'OK'){
             this.status = 0;
@@ -177,7 +177,7 @@ export class PreliminaryRegistrationComponent implements OnInit {
             this.status = 1;
             this.message = `Não foi encontrado ${this.title}.`;
           }          
-          this.getEmployees();
+          this.getEmployersUnionContribution();
         },
         error => {
           this.status = 1;
@@ -209,5 +209,4 @@ export class PreliminaryRegistrationComponent implements OnInit {
   public fGFilterCompanyField(field:string):any{
     return this.fGFilterCompany.get(field);
   }
-
 }

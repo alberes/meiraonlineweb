@@ -11,6 +11,7 @@ import { SchoolCalendarComponent } from '../../school-calendar/school-calendar.c
 import { SchoolCalendarSaveComponent } from '../../school-calendar-save/school-calendar-save.component';
 import { PreliminaryRegistrationComponent } from '../../preliminary-registration/preliminary-registration.component';
 import { PreliminaryRegistrationSaveComponent } from '../../preliminary-registration-save/preliminary-registration-save.component';
+import { EmployerUnionContributionComponent } from '../../employer-union-contribution/employer-union-contribution.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PreliminaryRegistrationSaveComponent } from '../../preliminary-registra
     SchoolCalendarComponent,
     SchoolCalendarSaveComponent,
     PreliminaryRegistrationComponent,
-    PreliminaryRegistrationSaveComponent
+    PreliminaryRegistrationSaveComponent,
+    EmployerUnionContributionComponent
   ],
   imports: [
     CommonModule,

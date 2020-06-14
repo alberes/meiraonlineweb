@@ -14,6 +14,7 @@ import { MessageDTO } from '../models/message.dto';
 export class SchoolCalendarComponent implements OnInit {
 
   public title:string = 'Calendário Escolar';
+  private resource:string = 'schoolCalendars';
 
   public fGFilterCompany:FormGroup;
   public schoolCalendars:SchoolCalendarDTO[];
@@ -59,7 +60,7 @@ export class SchoolCalendarComponent implements OnInit {
     if(this.currentPage === 0){
       this.currentPage = 1;
     }
-    let resource:string = `schoolCalendars?page=${(this.currentPage - 1)}&linesPerPage=10&orderBy=id`;
+    let resource:string = `${this.resource}?page=${(this.currentPage - 1)}&linesPerPage=10&orderBy=id`;
     this.apiSchoolCalendarService.getSchoolCalendars(resource).
         subscribe(response => {
           this.schoolCalendars = response['content'];
@@ -101,7 +102,7 @@ export class SchoolCalendarComponent implements OnInit {
   public export():void{
     if(this.modalService.hasOpenModals){
       this.modalService.dismissAll();
-      this.apiSchoolCalendarService.export(`schoolCalendars/export/${this.schoolCalendarDTO.id}`).
+      this.apiSchoolCalendarService.export(`${this.resource}/export/${this.schoolCalendarDTO.id}`).
       subscribe((response:MessageDTO) => {
         this.status = 0;
         if(response.status === 'OK'){
@@ -123,7 +124,7 @@ export class SchoolCalendarComponent implements OnInit {
 
   public exportMessage(id:string, name:string, content):void{
     this.schoolCalendarDTO.id = id;
-    this.apiSchoolCalendarService.getSchoolCalendar(`schoolCalendars/${this.schoolCalendarDTO.id}`).
+    this.apiSchoolCalendarService.getSchoolCalendar(`${this.resource}/${this.schoolCalendarDTO.id}`).
       subscribe((sickleaves:any) => {
         let total:number = Number(sickleaves['totalElements']);
         if(total === 0){

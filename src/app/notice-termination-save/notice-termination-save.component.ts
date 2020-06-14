@@ -16,6 +16,8 @@ import { Employee } from '../models/employee.dto';
 export class NoticeTerminationSaveComponent implements OnInit {
 
   public title:string = 'Aviso Prévio Trabalhado / Idenizado';
+  private resource:string = 'terminationotices';
+
   public employees: Array<DomainDTO> = [];
   public typesNotices: DomainDTO[];
   public reasonsNotices: DomainDTO[];
@@ -98,7 +100,7 @@ export class NoticeTerminationSaveComponent implements OnInit {
       this.employeeId = params.get('employeeId');
     });
     if(this.employeeId !== null){
-      this.apiNoticeTerminationService.getNoticeTermination(`terminationotices/employee/${this.employeeId}`).
+      this.apiNoticeTerminationService.getNoticeTermination(`${this.resource}/employee/${this.employeeId}`).
         subscribe((noticeTermination:NoticeTerminationDTO) => {
           this.noticeTerminationDTO = noticeTermination;
           if(this.noticeTerminationDTO !== null){
@@ -143,7 +145,7 @@ export class NoticeTerminationSaveComponent implements OnInit {
       this.modalService.dismissAll();      
       this.toNoticeTerminationDTO();
       if(this.actiomModal === 'Atualizar'){
-        this.apiNoticeTerminationService.update(`terminationotices/${this.noticeTerminationDTO.id}`, this.noticeTerminationDTO).
+        this.apiNoticeTerminationService.update(`${this.resource}/${this.noticeTerminationDTO.id}`, this.noticeTerminationDTO).
         subscribe((response) => {
             this.status = 0;
             this.message = `${this.title} atualizado com sucesso.`;
@@ -156,7 +158,7 @@ export class NoticeTerminationSaveComponent implements OnInit {
           );
       }else{
         this.noticeTerminationDTO.export = 'N';
-        this.apiNoticeTerminationService.save(`terminationotices`, this.noticeTerminationDTO).
+        this.apiNoticeTerminationService.save(`${this.resource}`, this.noticeTerminationDTO).
         subscribe((response) => {
             this.status = 0;
             this.message = `${this.title} criado com sucesso.`;

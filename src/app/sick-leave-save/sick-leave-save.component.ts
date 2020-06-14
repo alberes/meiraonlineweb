@@ -16,6 +16,8 @@ import { SickLeaveDTO } from '../models/sickleave.dto';
 export class SickLeaveSaveComponent implements OnInit {
 
   public title:string = 'Afastamento Temporário';
+  private resource:string = 'sickleaves';
+
   public employees: Array<DomainDTO> = [];
   public fGSickLeave:FormGroup;
   private sickLeaveDTO:SickLeaveDTO;
@@ -178,7 +180,7 @@ export class SickLeaveSaveComponent implements OnInit {
       this.modalService.dismissAll();      
       this.toSickLeave();
       if(this.actiomModal === 'Atualizar'){
-        this.apiSickLeaveService.update(`sickleaves/${this.sickLeaveDTO.id}`, this.sickLeaveDTO).
+        this.apiSickLeaveService.update(`${this.resource}/${this.sickLeaveDTO.id}`, this.sickLeaveDTO).
         subscribe((response) => {
           this.status = 0;
           this.message = `${this.title} atualizado ${this.sickLeaveDTO.id} - ${this.sickLeaveDTO.sickNumber} com sucesso.`;
@@ -194,7 +196,7 @@ export class SickLeaveSaveComponent implements OnInit {
         );
       }else{
         this.sickLeaveDTO.export = 'N';
-        this.apiSickLeaveService.save('sickleaves', this.sickLeaveDTO).
+        this.apiSickLeaveService.save(this.resource, this.sickLeaveDTO).
         subscribe(response => {
           this.status = 0;
           this.sickLeaveDTO.id = this.getId(response.headers.get('location'));
@@ -222,7 +224,7 @@ export class SickLeaveSaveComponent implements OnInit {
     if(this.currentPage === 0){
       this.currentPage = 1;
     }
-    let resource:string = `sickleaves/employee/${this.employeeDTO.id}?page=${(this.currentPage - 1)}&linesPerPage=10&orderBy=id`;
+    let resource:string = `${this.resource}/employee/${this.employeeDTO.id}?page=${(this.currentPage - 1)}&linesPerPage=10&orderBy=id`;
     this.apiSickLeaveService.getSickLeaveByEmployee(resource).
         subscribe(response => {
           this.sickLeaves = response['content'];
@@ -247,7 +249,7 @@ export class SickLeaveSaveComponent implements OnInit {
 
   public deleteMessage(id:string, sickNumber:string, content):void{
     this.status = -1;
-    this.apiSickLeaveService.getSickLeave(`sickleaves/${id}`).
+    this.apiSickLeaveService.getSickLeave(`${this.resource}/${id}`).
       subscribe((sickleave:SickLeaveDTO) => {
         if(sickleave === null){
           this.messageModal = `Não existe o ${this.title} ${id} - ${sickNumber}`;
@@ -266,7 +268,7 @@ export class SickLeaveSaveComponent implements OnInit {
   public delete():void{
     if(this.modalService.hasOpenModals){
       this.modalService.dismissAll();
-      this.apiSickLeaveService.delete(`sickleaves/${this.sickLeaveDTO.id}`).
+      this.apiSickLeaveService.delete(`${this.resource}/${this.sickLeaveDTO.id}`).
         subscribe((response) => {
           this.status = 0;
           this.message = `${this.title} ${this.sickLeaveDTO.id} - ${this.sickLeaveDTO.sickNumber} excluído com sucesso.`; 

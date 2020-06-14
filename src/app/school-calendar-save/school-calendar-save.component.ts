@@ -13,6 +13,7 @@ import { ModalDismissReasons, NgbModalOptions, NgbModal } from '@ng-bootstrap/ng
 export class SchoolCalendarSaveComponent implements OnInit {
 
   public title:string = 'Calendário Escolar';
+  private resource:string = 'schoolCalendars';
 
   public fGSchoolCalendar:FormGroup;
   private schoolCalendarDTO:SchoolCalendarDTO;
@@ -43,7 +44,7 @@ export class SchoolCalendarSaveComponent implements OnInit {
     if(this.schoolCalendarDTO.id === "0"){
       this.actiomModal = 'Salvar';
     }else{
-      this.apiSchoolCalendarService.getSchoolCalendar(`schoolCalendars/${this.schoolCalendarDTO.id}`).
+      this.apiSchoolCalendarService.getSchoolCalendar(`${this.resource}/${this.schoolCalendarDTO.id}`).
         subscribe((schoolCalendar:SchoolCalendarDTO) => {
           if(schoolCalendar === null){
             this.status = 2;
@@ -127,7 +128,7 @@ export class SchoolCalendarSaveComponent implements OnInit {
       this.modalService.dismissAll();
       this.toSchoolCalendar();
       if(this.schoolCalendarDTO.id === '0'){
-        this.apiSchoolCalendarService.save(`schoolCalendars`, this.schoolCalendarDTO).
+        this.apiSchoolCalendarService.save(this.resource, this.schoolCalendarDTO).
           subscribe((response) => {
             this.status = 0;
             this.actiomModal = 'Atualizar';
@@ -142,7 +143,7 @@ export class SchoolCalendarSaveComponent implements OnInit {
         );
       }else{
         this.toSchoolCalendar();
-        this.apiSchoolCalendarService.update(`schoolCalendars/${this.schoolCalendarDTO.id}`, this.schoolCalendarDTO).
+        this.apiSchoolCalendarService.update(`${this.resource}/${this.schoolCalendarDTO.id}`, this.schoolCalendarDTO).
           subscribe((response) => {
             this.status = 0;
             this.message = `${this.title} atualizado ${this.schoolCalendarDTO.id} - ${this.schoolCalendarDTO.name} com sucesso.`;
@@ -159,7 +160,7 @@ export class SchoolCalendarSaveComponent implements OnInit {
   }
 
   public deleteMessage(content):void{
-    this.apiSchoolCalendarService.getSchoolCalendar(`schoolCalendars/${this.schoolCalendarDTO.id}`).
+    this.apiSchoolCalendarService.getSchoolCalendar(`${this.resource}/${this.schoolCalendarDTO.id}`).
       subscribe((schoolCalendar:SchoolCalendarDTO) => {
         if(schoolCalendar === null){
           this.messageModal = `Não existe o ${this.title} ${this.schoolCalendarDTO.id} - ${this.schoolCalendarDTO.name}`;
@@ -178,7 +179,7 @@ export class SchoolCalendarSaveComponent implements OnInit {
   public delete():void{
     if(this.modalService.hasOpenModals){
       this.modalService.dismissAll();
-      this.apiSchoolCalendarService.delete(`schoolCalendars/${this.schoolCalendarDTO.id}`).
+      this.apiSchoolCalendarService.delete(`${this.resource}/${this.schoolCalendarDTO.id}`).
         subscribe((response) => {
           this.status = 0;
           this.message = `${this.title} ${this.schoolCalendarDTO.id} - ${this.schoolCalendarDTO.name} excluído com sucesso.`;

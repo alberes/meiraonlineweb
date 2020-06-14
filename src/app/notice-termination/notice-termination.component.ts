@@ -16,6 +16,8 @@ import { MessageDTO } from '../models/message.dto';
 export class NoticeTerminationComponent implements OnInit {
 
   public title:string = 'Aviso Prévio Trabalhado / Idenizado';
+  private resource:string = 'terminationotices'; 
+
   public companies: DomainDTO[];
   public employees: DomainDTO[];
 
@@ -117,7 +119,7 @@ export class NoticeTerminationComponent implements OnInit {
 
   public deleteMessage(id:string, name:string, content):void{
     this.employeeId = id;
-    this.apiNoticeTerminationService.getNoticeTermination(`terminationotices/employee/${this.employeeId}`).
+    this.apiNoticeTerminationService.getNoticeTermination(`${this.resource}/employee/${this.employeeId}`).
       subscribe((noticeTermination:NoticeTerminationDTO) => {
         if(noticeTermination === null){
           this.titleModal = 'Alerta';
@@ -136,7 +138,7 @@ export class NoticeTerminationComponent implements OnInit {
   public delete():void{
     if(this.modalService.hasOpenModals){
       this.modalService.dismissAll();
-      this.apiNoticeTerminationService.delete(`terminationotices/${this.employeeId}`).
+      this.apiNoticeTerminationService.delete(`${this.resource}/${this.employeeId}`).
         subscribe((response) => {
           this.status = 0;
           this.message = '${this.title} excluído com sucesso.';
@@ -152,7 +154,7 @@ export class NoticeTerminationComponent implements OnInit {
 
   public exportMessage(id:string, name:string, content):void{
     this.employeeId = id;
-    this.apiNoticeTerminationService.getNoticeTermination(`terminationotices/employee/${this.employeeId}`).
+    this.apiNoticeTerminationService.getNoticeTermination(`${this.resource}/employee/${this.employeeId}`).
       subscribe((noticeTermination:NoticeTerminationDTO) => {
         if(noticeTermination === null){
           this.titleModal = 'Alerta';
@@ -171,7 +173,7 @@ export class NoticeTerminationComponent implements OnInit {
   public export():void{
     if(this.modalService.hasOpenModals){
       this.modalService.dismissAll();
-      this.apiNoticeTerminationService.export(`terminationotices/export/${this.employeeId}`).
+      this.apiNoticeTerminationService.export(`${this.resource}/export/${this.employeeId}`).
       subscribe((response:MessageDTO) => {
           if(response.status === 'OK'){
             this.status = 0;

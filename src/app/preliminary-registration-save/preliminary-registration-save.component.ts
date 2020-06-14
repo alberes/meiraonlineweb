@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 export class PreliminaryRegistrationSaveComponent implements OnInit {
 
   public title:string = 'Cadastro Preliminar';
+  private resource:string = 'preliminaryregistrations';
   
   public fGPreliminaryRegistration:FormGroup;
   private preliminaryRegistrationDTO:PreliminaryRegistrationDTO;
@@ -43,7 +44,7 @@ export class PreliminaryRegistrationSaveComponent implements OnInit {
     if(this.preliminaryRegistrationDTO.id === "0"){
       this.actiomModal = 'Salvar';
     }else{
-      this.apiPreliminaryRegistrationService.getPreliminaryRegistration(`preliminaryregistrations/${this.preliminaryRegistrationDTO.id}`).
+      this.apiPreliminaryRegistrationService.getPreliminaryRegistration(`${this.resource}/${this.preliminaryRegistrationDTO.id}`).
         subscribe((preliminaryRegistration:PreliminaryRegistrationDTO) => {
           if(preliminaryRegistration === null){
             this.status = 2;
@@ -100,7 +101,7 @@ export class PreliminaryRegistrationSaveComponent implements OnInit {
       this.modalService.dismissAll();
       this.toPreliminaryRegistration();
       if(this.preliminaryRegistrationDTO.id === '0'){
-        this.apiPreliminaryRegistrationService.save(`preliminaryregistrations`, this.preliminaryRegistrationDTO).
+        this.apiPreliminaryRegistrationService.save(this.resource, this.preliminaryRegistrationDTO).
           subscribe((response) => {
             this.status = 0;
             this.actiomModal = 'Atualizar';
@@ -115,7 +116,7 @@ export class PreliminaryRegistrationSaveComponent implements OnInit {
         );
       }else{
         this.toPreliminaryRegistration();
-        this.apiPreliminaryRegistrationService.update(`preliminaryregistrations/${this.preliminaryRegistrationDTO.id}`, this.preliminaryRegistrationDTO).
+        this.apiPreliminaryRegistrationService.update(`${this.resource}/${this.preliminaryRegistrationDTO.id}`, this.preliminaryRegistrationDTO).
           subscribe((response) => {
             this.status = 0;
             alert(JSON.stringify(this.preliminaryRegistrationDTO));
@@ -133,7 +134,7 @@ export class PreliminaryRegistrationSaveComponent implements OnInit {
   }
 
   public deleteMessage(content):void{
-    this.apiPreliminaryRegistrationService.getPreliminaryRegistration(`preliminaryregistrations/${this.preliminaryRegistrationDTO.id}`).
+    this.apiPreliminaryRegistrationService.getPreliminaryRegistration(`${this.resource}/${this.preliminaryRegistrationDTO.id}`).
       subscribe((preliminaryRegistration:PreliminaryRegistrationDTO) => {
         if(preliminaryRegistration === null){
           this.messageModal = `Não existe o ${this.title} ${this.preliminaryRegistrationDTO.id} - ${this.preliminaryRegistrationDTO.name}`;
@@ -152,7 +153,7 @@ export class PreliminaryRegistrationSaveComponent implements OnInit {
   public delete():void{
     if(this.modalService.hasOpenModals){
       this.modalService.dismissAll();
-      this.apiPreliminaryRegistrationService.delete(`preliminaryregistrations/${this.preliminaryRegistrationDTO.id}`).
+      this.apiPreliminaryRegistrationService.delete(`${this.resource}/${this.preliminaryRegistrationDTO.id}`).
         subscribe((response) => {
           this.status = 0;
           this.message = `${this.title} ${this.preliminaryRegistrationDTO.id} - ${this.preliminaryRegistrationDTO.name} excluído com sucesso.`;

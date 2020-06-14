@@ -2,7 +2,7 @@
 </div>
 <div class="main-content">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
       <div class="card card-plain">
         <div class="card-header">
           <p class="category">{{ title }}</p>
@@ -52,15 +52,18 @@
                     </div>
                     <div class="col-auto my-1">
                       <button type="submit" class="btn btn-primary" [disabled]="fGFilterCompanyField('companyId').invalid || fGFilterCompanyField('exported').invalid">Filtrar</button>
-                      <a [routerLink]="['/preliminary-registration-save', 0]" class="btn btn-primary">Novo</a>
+                      <a [routerLink]="['/employer-union-contribution-save', 0]" class="btn btn-primary">Novo</a>
                     </div>   
-                  </div>
+                </div>
             </form>
             <div class="table-responsive">
                 <table class="table">
                   <thead class=" text-primary">
                       <th class="col-sm-12">
                         Nome
+                      </th>
+                      <th class="col-sm-12">
+                        valor
                       </th>
                       <th class="col-sm-1">
                         Excluir
@@ -69,19 +72,22 @@
                         Exportar
                       </th>
                     </thead>
-                    <tbody class="employee">
-                    <tr *ngFor="let item of employees; let even = even; let odd = odd">
+                    <tbody class="employees-union">
+                    <tr *ngFor="let item of employersUnionContribution; let even = even; let odd = odd">
                       <td>
                         <a [routerLink]="['/preliminary-registration-save', item.id]">{{ item.name }}</a>
                       </td>
                       <td>
+                          {{ item.contributionAmount }}
+                      </td>
+                      <td>
                         <div class="col-auto my-1">
-                          <a class="btn btn-primary" (click)="deleteMessage(item.id, item.name, actionPreliminaryRegistration)">Excluir</a>
+                          <a class="btn btn-primary" (click)="deleteMessage(item.id, item.name, actionEmployerUnionContribution)">Excluir</a>
                         </div>
                       </td>
                       <td>
                         <div class="col-auto my-1">
-                          <a *ngIf="allowExport" class="btn btn-primary" (click)="exportMessage(item.id, item.name, actionPreliminaryRegistration)">Exportar</a>
+                          <a *ngIf="allowExport" class="btn btn-primary" (click)="exportMessage(item.id, item.name, actionEmployerUnionContribution)">Exportar</a>
                           <button *ngIf="!allowExport" class="btn" [disabled]="!allowExport">Exportar</button>
                         </div>
                       </td>
@@ -117,7 +123,7 @@
                 </button>            
              </div>
           </div>
-          <ng-template #actionPreliminaryRegistration let-modal>
+          <ng-template #actionEmployerUnionContribution let-modal>
             <div class="modal-header">
               <h4 class="modal-title" id="modal-basic-title">{{ titleModal }}</h4>
               <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">

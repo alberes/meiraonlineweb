@@ -8,6 +8,7 @@ import { SchoolCalendarComponent } from '../../school-calendar/school-calendar.c
 import { SchoolCalendarSaveComponent } from '../../school-calendar-save/school-calendar-save.component';
 import { PreliminaryRegistrationComponent } from '../../preliminary-registration/preliminary-registration.component';
 import { PreliminaryRegistrationSaveComponent } from '../../preliminary-registration-save/preliminary-registration-save.component';
+import { EmployerUnionContributionComponent } from '../../employer-union-contribution/employer-union-contribution.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'notice-termination', component: NoticeTerminationComponent},
@@ -17,5 +18,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'school-calendar', component: SchoolCalendarComponent},
     { path: 'school-calendar-save/:id', component: SchoolCalendarSaveComponent},
     { path: 'preliminary-registration', component: PreliminaryRegistrationComponent},
-    { path: 'preliminary-registration-save/:id', component: PreliminaryRegistrationSaveComponent}
+    { path: 'preliminary-registration-save/:id', component: PreliminaryRegistrationSaveComponent},
+    { path: 'employer-union-contribution', component: EmployerUnionContributionComponent}
 ];

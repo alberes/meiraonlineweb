@@ -10,6 +10,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpErrorMeiraInterceptor } from './services/exception/http-error.interceptor';
+import { EmployerUnionContributionComponent } from './employer-union-contribution/employer-union-contribution.component';
 
 @NgModule({
   declarations: [
